@@ -37,14 +37,20 @@ int main()
 ```
 ifadesi ile _3_ elemanlı bir int dizi oluşturmuş oluyoruz. Parantez içinde dizinin türünü belirtirken dizinin boyutunu yazabileceğimiz gibi boyut değerinin çıkarımını derleyiciye de bırakabiliyoruz:
 
-```(int []){1, 2, 3, 4, 5, 6}```
+```
+(int []){1, 2, 3, 4, 5, 6}
+```
 Yukarıdaki ifade ile _6_ elemanlı _int_ bir dizi oluşturduk. Dizinin eleman sayısını belirtir ve eleman sayısından daha az sayıda ilk değer sağlarsak dizinin kalan elemanları varsayılan değerlerle (tam sayı ve gerçek sayı dizileri için _0_, gösterici dizileri için _NULL_ gösterici) hayata başlıyorlar:
 
-```(double a[20]) {1., 2., 3.}```
+```
+(double a[20]) {1., 2., 3.}
+```
 
 ifadesi ile _20_ elemanlı bir dizi oluşturarak dizinin ilk I elemanının alacağı değerleri belirtmiş olduk. Dizinin kalan _17_ elemanı 0. değerleriyle hayata başlayacak. Dizi elemanlarına ilk değer verirken yine _C99_ standartlarıyla dile eklenen _"designated initializer"_ denilen sentaks ile dizinin seçilmiş elemanlarına ilk değer verip diğer elemanlarını varsayılan değerlerle başlatabiliyoruz:
 
-```(int [100]){[12] = 2, [34] = 4, [67] = 6}```
+```
+(int [100]){[12] = 2, [34] = 4, [67] = 6}
+```
 
 Yukarıdaki ifade ile _100_ elemanlı bir dizi oluşturduk. Dizinin sırasıyla _12_, _34_ ve _67_ indeksli elemanlarına ilk değerlerini verdik ve kalan elemanlarının hayata 0 değerleriyle gelmesini sağladık. _"designated initializer"_ kullanılması durumunda yine dizinin boyutunu belirtmek zorunda değiliz:
 
@@ -53,15 +59,19 @@ Yukarıdaki ifade ile _100_ elemanlı bir dizi oluşturduk. Dizinin sırasıyla 
 ```
 Yukarıdaki ifade ile bu kez _68_ elemanlı bir dizi oluşturmuş olduk. Yapı ya da birlik nesnelerinin _"compound literal"_ biçiminde oluşturulması için kullanılması gereken sentaks da neredeyse aynı. _Employee_ isimli bir yapı türünün bildirildiğini düşünelim:
 
-```typedef struct {
+```
+typedef struct {
     char name[40];
     int id;
     double wage;
-}Employee;```
+}Employee;
+```
 
 Şimdi bu türden nesnelerin oluşturulmasını sağlayacak bazı _"bileşik sabit"_ ifadeleri yazalım:
 
-```(Employee){"Burhan Koc", 1345, 45.60)```
+```
+(Employee){"Burhan Koc", 1345, 45.60)
+```
 Yukarıdaki ifade ile _Employee_ türünden bir nesneyi tüm elemanlarına ilk değer vererek oluşturduk.
 
 ```
@@ -98,7 +108,7 @@ int main()
 
 Yukarıdaki kodda main işlevi içinde elemanları Student türünden boyutu 10 olan bir dizi tanımlanıyor ve dizinin belirlenmiş elemanlarına ilk değer veriliyor. Daha sonra dizinin 1 ve 2 indisli elemanlarına Student türünden bileşik sabit ifadeleri ile atamalar yapılıyor. Aynı türden yapı nesnelerinin birbirlerine atanabildiğini hatırlayalım.
 
-_Compound literal_ ifadeleri ile oluşturulan nesnelere sabit ifadeleri (constant expressions) ile ilk değer verme zorunluluğu yok:
+_Compound literal_ ifadeleri ile oluşturulan nesnelere sabit ifadeleri _(constant expressions)_ ile ilk değer verme zorunluluğu yok:
 
 ```
 void f(int x, int y, int z)
@@ -107,9 +117,9 @@ void f(int x, int y, int z)
     //...
 }
 ```
-Yukarıda tanımlanan func işlevi içinde oluşturulan 3 elemanlı int diziye isimlendirilmemiş nesneye işlevin parametre değişkenleri ile ilk değer veriliyor. Diziden adrese dönüşüm (array to pointer conversion) kuralı burada da geçerli.
+Yukarıda tanımlanan _func_ işlevi içinde oluşturulan _3_ elemanlı _int_ diziye isimlendirilmemiş nesneye işlevin parametre değişkenleri ile ilk değer veriliyor. Diziden adrese dönüşüm _(array decay)_ kuralı burada da geçerli.
 
-Bileşik sabit ifadeleri ile tekil (scalar) türlerden de nesneler oluşturmamız mümkün:
+Bileşik sabit ifadeleri ile tekil _(scalar)_ türlerden de nesneler oluşturmamız mümkün:
 
 ```
 void f()
@@ -133,7 +143,7 @@ int main()
     //...
 }
 ```
-Yukarıdaki örnekte oluşturulan Employee nesnesinin adresi ile _p_ isimli gösterici değişkene ilk değer veriliyor. Daha sonraki deyimlerle nesnemizin _name_ ve _wage_ isimli elemanlarının değerlerinin değiştirildiğini görüyorsunuz. Bileşik sabit ifadeleri ile oluşturduğumuz dizileri de değiştirebiliriz:
+Yukarıdaki örnekte oluşturulan _Employee_ nesnesinin adresi ile _p_ isimli gösterici değişkene ilk değer veriliyor. Daha sonraki deyimlerle nesnemizin _name_ ve _wage_ isimli elemanlarının değerlerinin değiştirildiğini görüyorsunuz. Bileşik sabit ifadeleri ile oluşturduğumuz dizileri de değiştirebiliriz:
 
 ```
 int main()
@@ -167,7 +177,7 @@ int main()
 }
 ```
 
-Global kod alanında oluşturulan "bileşik sabit" nesneleri, diğer isimlendirilmiş global nesneler gibi statik ömür _(static storage class)_ kategorisindeler. Blok içinde oluşturulan nesneler ise otomatik ömre _(automatic storage class)_ sahipler:
+Global kod alanında oluşturulan _"bileşik sabit"_ nesneleri, diğer isimlendirilmiş global nesneler gibi statik ömür _(static storage class)_ kategorisindeler. Blok içinde oluşturulan nesneler ise otomatik ömre _(automatic storage class)_ sahipler:
 
 ```
 void f()
