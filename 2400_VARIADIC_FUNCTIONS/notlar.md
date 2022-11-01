@@ -1,13 +1,20 @@
-Bir işlevin istenilen sayıda değerle çağrılması programlamada genel bir ihtiyaç ve programlama dillerinin çoğunda bu ihtiyacı karşılamaya yönelik araç ya da araçlar var.Özellikle giriş çıkış işlemlerine(input - output operations) yönelik hizmet veren kütüphanelerde böyle işlevler tercih ediliyor.Böyle işlevlere İngilizcede popüler olarak "variadic functions" deniyor.Ben bu terim yerine Türkçede "istenilen sayıda argüman ile çağrılabilen işlev" terimini kullanacağım.Çağrıyı yapan kod böyle işlevlere, ne yaptırmak istediğine bağlı olarak, farklı sayıda veri gönderebiliyor.Örnekler verelim :
-print isimli bir işlev kendisine gönderilen her bir ifadenin değerini ekrana yazdırıyor olabilir.get_mean isimli işlev kendisine gönderilen tam sayıların aritmetik ortalamasını hesaplıyor olabilir.concat isimli işlev kendisine gönderilen yazıları birleştirip tek bir yazı oluşturuyor olabilir.push_back_vals isimli işlev kendisine gönderilen değerleri bir dinamik diziye ekliyor olabilir.
-Farklı programlama dillerinin böyle bir işlevin oluşturulmasını sağlayan farklı araçları var.Örneğin C++ dilinde bu yapı için ağırlıklı olarak türden bağımsız programlama(generic programming) paradigmasına destek veren araçlardan faydalanılıyor.Bu yazının amacı C dilinde değişken sayıda argümanla çağrılabilen işlevleri ayrıntılı olarak incelemek.
-C dilinde bir işlevin "variadic" olduğunu gösteren ... atomu. Yan yana yazılmış üç nokta karakterinin oluşturduğu atoma(token) İngilizcede ellipsis deniyor.Bir işlevin "variadic" olması için son parametre değişkeni olarak ... atomunun yazılması gerekiyor.Üç nokta atomu atomu ile gösterilen parametreye bundan sonra "variadic parametre" diyeceğim.
+Bir işlevin istenilen sayıda değerle çağrılması programlamada genel bir ihtiyaç ve programlama dillerinin çoğunda bu ihtiyacı karşılamaya yönelik araç ya da araçlar var. Özellikle giriş çıkış işlemlerine _(input - output operations)_ yönelik hizmet veren kütüphanelerde böyle işlevler tercih ediliyor. Böyle işlevlere İngilizcede popüler olarak _"variadic function"_ deniyor. Ben bu terim yerine Türkçede _"istenilen sayıda argüman ile çağrılabilen işlev"_ terimini kullanacağım. Çağrıyı yapan kod böyle işlevlere, ne yaptırmak istediğine bağlı olarak, farklı sayıda veri gönderebiliyor.
+
+Örnekler verelim:
+_print_ isimli bir işlev kendisine gönderilen her bir ifadenin değerini ekrana yazdırıyor olabilir.get_mean isimli işlev kendisine gönderilen tam sayıların aritmetik ortalamasını hesaplıyor olabilir.concat isimli işlev kendisine gönderilen yazıları birleştirip tek bir yazı oluşturuyor olabilir. _push_back_vals_ isimli işlev kendisine gönderilen değerleri bir dinamik diziye ekliyor olabilir.
+
+Farklı programlama dillerinin böyle bir işlevin oluşturulmasını sağlayan farklı araçları var.Örneğin C++ dilinde bu yapı için ağırlıklı olarak türden bağımsız programlama _(generic programming)_ paradigmasına destek veren araçlardan faydalanılıyor.Bu yazının amacı C dilinde değişken sayıda argümanla çağrılabilen işlevleri ayrıntılı olarak incelemek.
+
+C dilinde bir işlevin "variadic" olduğunu gösteren ... atomu. Yan yana yazılmış üç nokta karakterinin oluşturduğu atoma _(token)_ İngilizcede ellipsis deniyor.Bir işlevin _"variadic"_ olması için son parametre değişkeni olarak ... atomunun yazılması gerekiyor. Üç nokta atomu atomu ile gösterilen parametreye bundan sonra "variadic parametre" diyeceğim.
 
 ```
 void print(int n, ...);
 int sum(int n, ...);
 double ave(int, int, ...)
-Bu işlevlerin çağrılmasına ilişkin genel kural şu : Çağrıyı yapan taraf "variadic" parametreden önce yer alan türleri belirtilmiş tüm parametre değişkenlerine argüman göndermek zorunda.variadic parametre için kendi seçimine bağlı olarak(opsiyonel olarak) dilediği sayıda argüman olarak gönderilebilir.Aşağıdaki kodu inceleyelim :
+```
+Bu işlevlerin çağrılmasına ilişkin genel kural şu : Çağrıyı yapan taraf "variadic" parametreden önce yer alan türleri belirtilmiş tüm parametre değişkenlerine argüman göndermek zorunda.variadic parametre için kendi seçimine bağlı olarak _(opsiyonel olarak)_ dilediği sayıda argüman olarak gönderilebilir.Aşağıdaki kodu inceleyelim :
+
+```
 void func(int, int, ...);
 int main(void)
 {
