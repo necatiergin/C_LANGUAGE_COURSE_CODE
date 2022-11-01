@@ -27,38 +27,45 @@ int main(void)
 ```
 
 "variadic parametre" son parametre olarak yazılmalı ve kendisinden önce türü belirtilmiş en az bir parametre değişkeni olmalı.
-tür kontrolü
+#### tür kontrolü
 Seçime bağlı olarak gönderilecek argümanların türlerinin "variadic" işlev tarafından bilinmesi mümkün değil.Derleyici seçimlik(opsiyonel) argümanları işleve göndermeden "varsayılan argüman dönüşümü" (default argument conversion) denilen dönüşümü gerçekleştirir.Yani char ve short türlerden olan argümanlar işaretli ya da işaretsiz int türüne, float türden olan argümanlar ise double türüne dönüştürülürler.İstenilen sayıda argümanla çağrılan işlevlerin en zayıf tarafı da bu.Derleyicinin bir tür kontrolü yapma şansı yok.Bu yüzden variadic işlevler normal işlevlere göre daha yüksek kodlama hatası riski içeriyorlar.
 stdarg.h başlık dosyası içinde tanımlanan makrolar
 variadic bir işlev tanımlayabilmemiz için standart <stdarg.h> başlık dosyasında bildirilen va_list türünün ve yine aynı başlık dosyasında tanımlanan bazı standart makroların kullanılması gerekiyor :
-va_list
-va_list opsiyonel argümanları gösterecek bir adres türüne verilen bir tür eş ismi(type alias).Standartlar va_list'in hangi türe bir typedef bildirimi ile eş isim olarak seçileceğini derleyicilere bırakmış. Seçimlik argümanların dolaşılabilmesi için va_list türünden bir değişkenin tanımlanması ve bu değişkene va_start makrosuyla değer verilmesi gerekiyor.
-va_start
+#### va_list
+_va_list_ opsiyonel argümanları gösterecek bir adres türüne verilen bir tür eş ismi(type alias).Standartlar va_list'in hangi türe bir typedef bildirimi ile eş isim olarak seçileceğini derleyicilere bırakmış. Seçimlik argümanların dolaşılabilmesi için va_list türünden bir değişkenin tanımlanması ve bu değişkene va_start makrosuyla değer verilmesi gerekiyor.
+#### va_start
 va_start aşağıdaki gibi bir makro :
+
 ```
 void va_start(va_list args, last_req);
 ```
 Bu makro seçimlik argümanları dolaşma işleminde kullanılacak va_list türünden değişkene değerini veriyor.Böylece va_list türünden değişkenin seçimlik ilk argümanı göstermesi sağlanıyor.Makronun ikinci parametresine işlevin türü belirtilerek isimlendirilmiş son parametresinin isminin geçilmesi gerekiyor.
-va_arg
-va_arg(va_list arg, arg_type);
+#### va_arg makrosu
+va_arg(va_list arg, arg_type);<br>
 va_arg makrosu sıradaki seçimlik argümanın değerini döndürürken va_list türünden değişkenin de değerini değiştirerek onun bir sonraki seçimlik argümanı göstermesini sağlıyor.Makronun ikinci parametresine elde edilecek argümanın tür bilgisinin geçilmesi gerekiyor.Bu makroya döngüsel bir yapıda, seçimlik argümanların sayısı kadar çağrı yapılmasıyla işlevin variadic parametresine gönderilen tüm argümanlara erişilebiliyor.
-va_end makrosu
+#### va_end makrosu
 ```
 va_end(va_list ap);
 ```
 Bu makro seçimlik argümanların dolaşılması sürecini sonlandırmak için çağrılıyor.Variadic işlevin çalışacak kodunun sonlanmasından önce bu makroyu çağırmak gerekiyor.
-va_copy makrosu
+#### va_copy makrosu
+
 ```
 void va_copy(va_list dest, va_list source);
 ```
-Bu makro dile C99 standartları ile eklendi.va_start makrosu çağrılarak ilk değerini almış va_list türünden değişkenin bu makro ile kopyası çıkartabiliyor.Böylece argümanları birden fazla kez dolaşmak kolayca mümkün hale geliyor.
-variadic parametreye gönderilen argümanların kullanılması
-İşlevlerin normal parametre değişkenlerini isimleri yoluyla kullanıyoruz.Ancak variadic parametreye ilişkin argümanların gönderildiği parametrelerin isimleri yok.Bu durumda işlev tanımında onları nasıl kullanacağız ? İşleve gönderilen argümanlara yalnızca, standart stdarg.h başlık dosyasında tanımlanan özel makroları kullanarak, fonksiyon çağrısı ile gönderildikleri sıra ile erişilebiliyor.Standart va_start, va_arg ve va_end makrolarını kullanarak 3 aşamalı bir sürecin oluşturulması gerekiyor :
-Önce va_start makrosunu kullanarak va_list türünden bir pointer değişkene değer verilmesi gerekiyor.Bu yapıldığında va_list türünden değişken seçimlik ilk argümanı gösteriyor hale geliyor.Daha sonra va_arg makrosuna döngüsel bir yapıda çağrı yaparak tüm seçimlik argümanlara erişilebiliyor.Yani va_arg makrosuna yapılan ilk çağrı ilk argümanı, ikinci çağrı ikinci argümanı veriyor.Argümanların hepsinin dolaşılması zorunlu değil.İşleve gönderilen argümanların bir kısmına erişmemek herhangi bir şekilde tanımsız davranış oluşturmuyor.Ancak gönderilen argüman sayısından daha fazla sayıda argümana erişim girişimi tanımsız davranış.
-Argümanların elde edilmesi işleminin bitirildiğini ifade etmek için va_list türünden değişken ile va_end makrosuna çağrı yapılması gerekiyor.Aslında derleyicilerin çoğu va_end makrosu karşılığı hiçbir kod üretmiyor.Yine de hem standartlara tam olarak uygun bir kod oluşturmak için hem de kodun okunmasını kolaylaştırmak va_end makrosu mutlaka çağrılmalı.
-işlev tanımında seçimlik argümanların sayısının elde edilmesi
+Bu makro dile _C99_ standartları ile eklendi.va_start makrosu çağrılarak ilk değerini almış _va_list_ türünden değişkenin bu makro ile kopyası çıkartabiliyor. Böylece argümanları birden fazla kez dolaşmak kolayca mümkün hale geliyor.
+
+#### variadic parametreye gönderilen argümanların kullanılması
+İşlevlerin normal parametre değişkenlerini isimleri yoluyla kullanıyoruz.Ancak variadic parametreye ilişkin argümanların gönderildiği parametrelerin isimleri yok.Bu durumda işlev tanımında onları nasıl kullanacağız ? İşleve gönderilen argümanlara yalnızca, standart stdarg.h başlık dosyasında tanımlanan özel makroları kullanarak, fonksiyon çağrısı ile gönderildikleri sıra ile erişilebiliyor.Standart va_start, va_arg ve va_end makrolarını kullanarak 3 aşamalı bir sürecin oluşturulması gerekiyor:
+
+Önce _va_start_ makrosunu kullanarak va_list türünden bir _pointer_ değişkene değer verilmesi gerekiyor.Bu yapıldığında _va_list_ türünden değişken seçimlik ilk argümanı gösteriyor hale geliyor. Daha sonra _va_arg_ makrosuna döngüsel bir yapıda çağrı yaparak tüm seçimlik argümanlara erişilebiliyor. Yani _va_arg_ makrosuna yapılan ilk çağrı ilk argümanı, ikinci çağrı ikinci argümanı veriyor.Argümanların hepsinin dolaşılması zorunlu değil. İşleve gönderilen argümanların bir kısmına erişmemek herhangi bir şekilde tanımsız davranış oluşturmuyor. Ancak gönderilen argüman sayısından daha fazla sayıda argümana erişim girişimi tanımsız davranış.
+
+Argümanların elde edilmesi işleminin bitirildiğini ifade etmek için _va_list_ türünden değişken ile _va_end_ makrosuna çağrı yapılması gerekiyor.Aslında derleyicilerin çoğu va_end makrosu karşılığı hiçbir kod üretmiyor.Yine de hem standartlara tam olarak uygun bir kod oluşturmak için hem de kodun okunmasını kolaylaştırmak _va_end_ makrosu mutlaka çağrılmalı.
+
+#### işlev tanımında seçimlik argümanların sayısının elde edilmesi
 variadic işlevlerde argüman sayısının elde edilmesi için birden fazla teknik kullanılabilir.
-İşlevin tam sayı türünden bir parametresi(tipik olarak birinci parametre) çağıran koddan işleve gönderilen diğer argümanların sayısını alır.Bu uygulanması en kolay tekniktir.Şimdi bu tekniği kullanan bir işlevi kodlayalım :
+İşlevin tam sayı türünden bir parametresi _(tipik olarak birinci parametre)_ çağıran koddan işleve gönderilen diğer argümanların sayısını alır. Bu uygulanması en kolay tekniktir.Şimdi bu tekniği kullanan bir işlevi kodlayalım:
+
 ```
 #include <stdarg.h>
 #include <stdio.h>
@@ -82,7 +89,8 @@ int main(void)
     printf("c = %d\n", c);
 }
 ```
-Yukarıdaki kodda tanımlanan sum isimli variadic işlev kendisine gönderilen tam sayıların toplamını hesaplıyor.Aşağıdaki kodda yine aynı tekniği kullanan min ve max isimli işlevlerin tanımları yer alıyor.Bu işlevler kendilerine gönderilen tam sayılardan en küçük ve en büyük olanlarının değerlerini buluyorlar :
+
+Yukarıdaki kodda tanımlanan sum isimli _variadic_ işlev kendisine gönderilen tam sayıların toplamını hesaplıyor. Aşağıdaki kodda yine aynı tekniği kullanan _min_ ve _max_ isimli işlevlerin tanımları yer alıyor.Bu işlevler kendilerine gönderilen tam sayılardan en küçük ve en büyük olanlarının değerlerini buluyorlar:
 
 ```
 #include <stdarg.h>
@@ -127,7 +135,7 @@ int main(void)
 }
 ```
 
-Bir başka teknik variadic işlevin kendisini çağıran koddan bir yazının adresini alarak kendisine gönderilen seçimlik argümanların sayısını bu yazıdan elde etmesi.stdio kütüphanesinde bildirilen standart scanf ve printf işlevleri de bu tekniği kullanıyor.Aşağıda printf işlevini sarmalayan basitleştirilmiş bir print işlevi tanımlıyoruz :
+Bir başka teknik _variadic_ işlevin kendisini çağıran koddan bir yazının adresini alarak kendisine gönderilen seçimlik argümanların sayısını bu yazıdan elde etmesi. _stdio_ kütüphanesinde bildirilen standart scanf ve printf işlevleri de bu tekniği kullanıyor. Aşağıda _printf_ işlevini sarmalayan basitleştirilmiş bir print işlevi tanımlıyoruz :
 
 ```
 #include <stdio.h>
@@ -203,4 +211,5 @@ int main(void)
     free(p);
 }
 ```
-Yukarıdaki kodda ismi concat olan istenilen sayıda argümanla çağrılabilen bir işlev tanımlanıyor.concat işlevi kendisine adresleri gönderilen yazıları elde ettiği dinamik bir bellek bloğunda birleştiriyor.İşlevi çağıran kod, birleştirilecek son yazının adresinden sonra işleve başka bir yazı gönderilmediğini bildirmek amacıyla işleve NULL gösterici geçiyor.Yukarıdaki kodda va_copy makrosunun kullanılması ile seçimlik argümanların iki kez dolaşıldığını görüyorsunuz.
+
+Yukarıdaki kodda ismi _concat_ olan istenilen sayıda argümanla çağrılabilen bir işlev tanımlanıyor. _concat_ işlevi kendisine adresleri gönderilen yazıları elde ettiği dinamik bir bellek bloğunda birleştiriyor. İşlevi çağıran kod, birleştirilecek son yazının adresinden sonra işleve başka bir yazı gönderilmediğini bildirmek amacıyla işleve _NULL_ gösterici geçiyor.Yukarıdaki kodda _va_copy_ makrosunun kullanılması ile seçimlik argümanların iki kez dolaşıldığını görüyorsunuz.
