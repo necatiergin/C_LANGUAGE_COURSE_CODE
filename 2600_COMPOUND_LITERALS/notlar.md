@@ -24,7 +24,7 @@ _main_ işlevi içinde tanımlanan _rec_ ve _a_ nesnelerinin yalnızca _draw_rec
 Bir bileşik sabit kullanarak isimlendirilmemiş bir dizi, yapı ya da birlik nesnesi oluşturabiliriz:
 
 ```
-int main()
+int main(void)
 {
     draw_rect((struct Rect){ 1.2, 6.7 });
     foo((int []) { 2, 6, 7, 1, 3 }); 
@@ -91,7 +91,7 @@ typedef struct
     int no;
 } Student;
 
-int main()
+int main(void)
 {
     Student a[] = { 
 	[0].pname = "Metin", [0].no = 13, 
@@ -106,7 +106,7 @@ int main()
 }
 ```
 
-Yukarıdaki kodda main işlevi içinde elemanları Student türünden boyutu 10 olan bir dizi tanımlanıyor ve dizinin belirlenmiş elemanlarına ilk değer veriliyor. Daha sonra dizinin 1 ve 2 indisli elemanlarına Student türünden bileşik sabit ifadeleri ile atamalar yapılıyor. Aynı türden yapı nesnelerinin birbirlerine atanabildiğini hatırlayalım.
+Yukarıdaki kodda _main_ işlevi içinde elemanları _Student_ türünden boyutu _10_ olan bir dizi tanımlanıyor ve dizinin belirlenmiş elemanlarına ilk değer veriliyor. Daha sonra dizinin 1 ve 2 indisli elemanlarına Student türünden bileşik sabit ifadeleri ile atamalar yapılıyor. Aynı türden yapı nesnelerinin birbirlerine atanabildiğini hatırlayalım.
 
 _Compound literal_ ifadeleri ile oluşturulan nesnelere sabit ifadeleri _(constant expressions)_ ile ilk değer verme zorunluluğu yok:
 
@@ -122,7 +122,7 @@ Yukarıda tanımlanan _func_ işlevi içinde oluşturulan _3_ elemanlı _int_ di
 Bileşik sabit ifadeleri ile tekil _(scalar)_ türlerden de nesneler oluşturmamız mümkün:
 
 ```
-void f()
+void f(void)
 {
     int *ip = &(int) { 10 };
     double *dp = &(double) { 12.3 };
@@ -131,11 +131,11 @@ void f()
 ```
 Yukarıdaki örneği yalnızca kodun geçerli olduğunu göstermek için verdim.
 
-"literal" sözcüğü "sabit" anlamında kullanılsa da "compound literals" biçiminde oluşturulan nesnelerin değerlerini değiştirmek tanımlı (defined) davranış niteliğinde:
+"literal" sözcüğü "sabit" anlamında kullanılsa da "compound literals" biçiminde oluşturulan nesnelerin değerlerini değiştirmek tanımlı _(defined)_ davranış niteliğinde:
 
 ```
 #include <string.h>
-int main()
+int main(void)
 {
     Employee *p = &(Employee) { .id = 7651 };
     strcpy(p->name, "Nurdan Temiz");
@@ -146,7 +146,7 @@ int main()
 Yukarıdaki örnekte oluşturulan _Employee_ nesnesinin adresi ile _p_ isimli gösterici değişkene ilk değer veriliyor. Daha sonraki deyimlerle nesnemizin _name_ ve _wage_ isimli elemanlarının değerlerinin değiştirildiğini görüyorsunuz. Bileşik sabit ifadeleri ile oluşturduğumuz dizileri de değiştirebiliriz:
 
 ```
-int main()
+int main(void)
 {
     int *p = (int[5]) { 0 };
     //...
@@ -158,7 +158,7 @@ int main()
 Bu şekilde oluşturulan char türden dizilerde tutulan yazıları da değiştirebiliriz:
 
 ```
-int main()
+int main(void)
 {
     char *p = (char[]) { "Beyhan" };
     //...
@@ -169,7 +169,7 @@ Ancak bir bileşik sabit ifadesi ile const bir nesne de oluşturmamız mümkün:
 
 ```
 void display_employee(const Employee *p);
-int main()
+int main(void)
 {
     const int *p = (const int[]) { 2, 3, 5, 7, 11, 13, 17, 19, 29 };
 	//
@@ -180,7 +180,7 @@ int main()
 Global kod alanında oluşturulan _"bileşik sabit"_ nesneleri, diğer isimlendirilmiş global nesneler gibi statik ömür _(static storage class)_ kategorisindeler. Blok içinde oluşturulan nesneler ise otomatik ömre _(automatic storage class)_ sahipler:
 
 ```
-void f()
+void f(void)
 {
     int *p;
     extern int func(void);
@@ -200,7 +200,7 @@ typedef struct {
     int mx, my;
 }Point;
 void drawpixel(Point);
-void drawline()
+void drawline(void)
 {
     for (int i = 0; i < 10; ++i)
 	drawpixel((Point) {i, i});
