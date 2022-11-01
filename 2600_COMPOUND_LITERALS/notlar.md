@@ -1,6 +1,6 @@
-C99 standartları ile C diline eklenen en önemli araçlardan biri compound literal. Türkçe karşılığı olarak bileşik sabit teriminin kullanılmasını öneriyorum.
+_C99_ standartları ile _C_ diline eklenen en önemli araçlardan biri **compound literal**. Türkçe karşılığı olarak _"bileşik sabit"_ teriminin kullanılmasını öneriyorum.
 
-C’de yazdığımız kodlarda sıklıkla şöyle bir durumla karşılaşıyoruz: Bir diziye, bir yapı (structure) ya da bir birlik (union) nesnesine ihtiyacımız var. Ancak söz konusu nesneyi muhtemelen yalnızca tek bir yerde kullanacağız. Bu durumda isimlendirilmiş bir değişken tanımlamamız gerekiyor. Aşağıdaki koda bakalım:
+C’de yazdığımız kodlarda sıklıkla şöyle bir durumla karşılaşıyoruz: Bir diziye, bir yapı _(structure)_ ya da bir birlik _(union)_ nesnesine ihtiyacımız var. Ancak söz konusu nesneyi muhtemelen yalnızca tek bir yerde kullanacağız. Bu durumda isimlendirilmiş bir değişken tanımlamamız gerekiyor. Aşağıdaki koda bakalım:
 
 ```
 struct Rect{
@@ -19,7 +19,7 @@ int main()
     foo(a); 
 }
 ```
-main işlevi içinde tanımlanan rec ve a nesnelerinin yalnızca draw_rect ve foo işlevlerine yapılan çağrılarda kullanılmak için tanımlandığını düşünelim. Kod bu niyeti açıkça anlatmadığı için okuyucuyu da yanıltıyor. Ben böyle bir kodu okuduğumda bu nesnelerin kapsamları (scope) içinde tekrar kullanılacaklarını düşünüyorum. Bu tür kodlarda bir başka sorun da "kapsam sızıntısı" (scope leakage) yani bu isimlerin kapsamlarının gereksiz yere geniş tutulması. Bu isimler bir daha kullanılmayacak olsalar da kapsamları içinde yanlışlıkla isimlerinin yazılması bir kodlama hatasına neden olabilir.
+_main_ işlevi içinde tanımlanan _rec_ ve _a_ nesnelerinin yalnızca _draw_rect_ ve _foo_ işlevlerine yapılan çağrılarda kullanılmak için tanımlandığını düşünelim. Kod bu niyeti açıkça anlatmadığı için okuyucuyu da yanıltıyor. Ben böyle bir kodu okuduğumda bu nesnelerin kapsamları (scope) içinde tekrar kullanılacaklarını düşünüyorum. Bu tür kodlarda bir başka sorun da "kapsam sızıntısı" _(scope leakage)_ yani bu isimlerin kapsamlarının gereksiz yere geniş tutulması. Bu isimler bir daha kullanılmayacak olsalar da kapsamları içinde yanlışlıkla isimlerinin yazılması bir kodlama hatasına neden olabilir.
 
 Bir bileşik sabit kullanarak isimlendirilmemiş bir dizi, yapı ya da birlik nesnesi oluşturabiliriz:
 
@@ -30,40 +30,42 @@ int main()
     foo((int []) { 2, 6, 7, 1, 3 }); 
 }
 ```
-İşlevlere gönderdiğimiz argümanlar bileşik sabitler. Aslında struct Rect türünden bir yapı nesnesini ve 5 elemanlı bir int diziyi isim vermeden oluşturmuş olduk. Şimdi compound literal ifadelerine yönelik sentaksı ayrıntılarıyla ele almaya başlayabiliriz. Önce dizi oluşturan bileşik sabit ifadelerini inceleyelim: Sentaksta yer alması gereken parantez içine dönüşüm türünü (cast type) yazıyoruz. Bu oluşturulacak dizinin türü. Daha sonra küme parantezi içinde oluşturacağımız dizinin elemanlarına verdiğimiz ilk değerleri listeliyoruz. Örneğin:
+İşlevlere gönderdiğimiz argümanlar bileşik sabitler. Aslında _struct Rect_ türünden bir yapı nesnesini ve _5_ elemanlı bir _int_ diziyi isim vermeden oluşturmuş olduk. Şimdi _compound literal_ ifadelerine yönelik sentaksı ayrıntılarıyla ele almaya başlayabiliriz. Önce dizi oluşturan bileşik sabit ifadelerini inceleyelim: Sentaksta yer alması gereken parantez içine dönüşüm türünü _(cast type)_ yazıyoruz. Bu oluşturulacak dizinin türü. Daha sonra küme parantezi içinde oluşturacağımız dizinin elemanlarına verdiğimiz ilk değerleri listeliyoruz. Örneğin:
 
 ```
 (int [3]){1, 2, 3}
 ```
-ifadesi ile 3 elemanlı bir int dizi oluşturmuş oluyoruz. Parantez içinde dizinin türünü belirtirken dizinin boyutunu yazabileceğimiz gibi boyut değerinin çıkarımını derleyiciye de bırakabiliyoruz:
+ifadesi ile _3_ elemanlı bir int dizi oluşturmuş oluyoruz. Parantez içinde dizinin türünü belirtirken dizinin boyutunu yazabileceğimiz gibi boyut değerinin çıkarımını derleyiciye de bırakabiliyoruz:
 
 ```(int []){1, 2, 3, 4, 5, 6}```
-Yukarıdaki ifade ile 6 elemanlı int bir dizi oluşturduk. Dizinin eleman sayısını belirtir ve eleman sayısından daha az sayıda ilk değer sağlarsak dizinin kalan elemanları varsayılan değerlerle (tam sayı ve gerçek sayı dizileri için 0, gösterici dizileri için NULL gösterici) hayata başlıyorlar:
+Yukarıdaki ifade ile _6_ elemanlı _int_ bir dizi oluşturduk. Dizinin eleman sayısını belirtir ve eleman sayısından daha az sayıda ilk değer sağlarsak dizinin kalan elemanları varsayılan değerlerle (tam sayı ve gerçek sayı dizileri için _0_, gösterici dizileri için _NULL_ gösterici) hayata başlıyorlar:
 
 ```(double a[20]) {1., 2., 3.}```
-ifadesi ile 20 elemanlı bir dizi oluşturarak dizinin ilk 3 elemanının alacağı değerleri belirtmiş olduk. Dizinin kalan 17 elemanı 0. değerleriyle hayata başlayacak. Dizi elemanlarına ilk değer verirken yine C99 standartlarıyla dile eklenen designated initializer denilen sentaks ile dizinin seçilmiş elemanlarına ilk değer verip diğer elemanlarını varsayılan değerlerle başlatabiliyoruz:
+
+ifadesi ile _20_ elemanlı bir dizi oluşturarak dizinin ilk I elemanının alacağı değerleri belirtmiş olduk. Dizinin kalan _17_ elemanı 0. değerleriyle hayata başlayacak. Dizi elemanlarına ilk değer verirken yine _C99_ standartlarıyla dile eklenen _"designated initializer"_ denilen sentaks ile dizinin seçilmiş elemanlarına ilk değer verip diğer elemanlarını varsayılan değerlerle başlatabiliyoruz:
 
 ```(int [100]){[12] = 2, [34] = 4, [67] = 6}```
-Yukarıdaki ifade ile 100 elemanlı bir dizi oluşturduk. dizinin sırasıyla 12, 34 ve 67 indeksli elemanlarına ilk değerlerini verdik ve kalan elemanlarının hayata 0 değerleriyle gelmesini sağladık. "designated initializer" kullanılması durumunda yine dizinin boyutunu belirtmek zorunda değiliz:
+
+Yukarıdaki ifade ile _100_ elemanlı bir dizi oluşturduk. Dizinin sırasıyla _12_, _34_ ve _67_ indeksli elemanlarına ilk değerlerini verdik ve kalan elemanlarının hayata 0 değerleriyle gelmesini sağladık. _"designated initializer"_ kullanılması durumunda yine dizinin boyutunu belirtmek zorunda değiliz:
 
 ```(int []){[12] = 2, [34] = 4, [67] = 6}```
-Yukarıdaki ifade ile bu kez 68 elemanlı bir dizi oluşturmuş olduk. Yapı ya da birlik nesnelerinin "compound literal" biçiminde oluşturulması için kullanılması gereken sentaks da neredeyse aynı. Employee isimli bir yapı türünün bildirildiğini düşünelim:
+Yukarıdaki ifade ile bu kez _68_ elemanlı bir dizi oluşturmuş olduk. Yapı ya da birlik nesnelerinin _"compound literal"_ biçiminde oluşturulması için kullanılması gereken sentaks da neredeyse aynı. _Employee_ isimli bir yapı türünün bildirildiğini düşünelim:
 
 ```typedef struct {
     char name[40];
     int id;
     double wage;
 }Employee;```
-Şimdi bu türden nesnelerin oluşturulmasını sağlayacak bazı "bileşik sabit" ifadeleri yazalım:
+Şimdi bu türden nesnelerin oluşturulmasını sağlayacak bazı _"bileşik sabit"_ ifadeleri yazalım:
 
 ```(Employee){"Burhan Koc", 1345, 45.60)```
-Yukarıdaki ifade ile Employee türünden bir nesneyi tüm elemanlarına ilk değer vererek oluşturduk.
+Yukarıdaki ifade ile _Employee_ türünden bir nesneyi tüm elemanlarına ilk değer vererek oluşturduk.
 
 (Employee){"Furkan Demirci")
-Yukarıdaki ifadede ise oluşturduğumuz Employee nesnesinin yalnızca name isimli elemanına ilk değer verdik. Nesnemizin diğer elemanları 0 değerleri ile hayata başlamış oldu.
+Yukarıdaki ifadede ise oluşturduğumuz _Employee_ nesnesinin yalnızca name isimli elemanına ilk değer verdik. Nesnemizin diğer elemanları 0 değerleri ile hayata başlamış oldu.
 
 ```(Employee){.id = 7651, .name = "Can Demirci")```
-Yukarıdaki ifade de ise oluşturduğumuz Employee nesnesinin seçilmiş elemanlarına "designated initializer" sentaksı ile ilk değer verdik. Şimdi de aşağıdaki kodu inceleyelim:
+Yukarıdaki ifade de ise oluşturduğumuz _Employee_ nesnesinin seçilmiş elemanlarına _"designated initializer"_ sentaksı ile ilk değer verdik. Şimdi de aşağıdaki kodu inceleyelim:
 
 ```typedef struct
 {
@@ -114,7 +116,7 @@ int main()
     p->wage = 45.80;
     //...
 }```
-Yukarıdaki örnekte oluşturulan Employee nesnesinin adresi ile p isimli gösterici değişkene ilk değer veriliyor. Daha sonraki deyimlerle nesnemizin name ve wage isimli elemanlarının değerlerinin değiştirildiğini görüyorsunuz. Bileşik sabit ifadeleri ile oluşturduğumuz dizileri de değiştirebiliriz:
+Yukarıdaki örnekte oluşturulan Employee nesnesinin adresi ile _p_ isimli gösterici değişkene ilk değer veriliyor. Daha sonraki deyimlerle nesnemizin _name_ ve _wage_ isimli elemanlarının değerlerinin değiştirildiğini görüyorsunuz. Bileşik sabit ifadeleri ile oluşturduğumuz dizileri de değiştirebiliriz:
 
 ```int main()
 {
@@ -141,7 +143,8 @@ int main()
 	//
     display_employee(&(const Employee) { "Nihat Uslu", 7121, 20.20 });
 }```
-Global kod alanında oluşturulan "bileşik sabit" nesneleri, diğer isimlendirilmiş global nesneler gibi statik ömür (static storage class) kategorisindeler. Blok içinde oluşturulan nesneler ise otomatik ömre (automatic storage class) sahipler:
+
+Global kod alanında oluşturulan "bileşik sabit" nesneleri, diğer isimlendirilmiş global nesneler gibi statik ömür _(static storage class)_ kategorisindeler. Blok içinde oluşturulan nesneler ise otomatik ömre _(automatic storage class)_ sahipler:
 
 ```void f()
 {
@@ -156,7 +159,7 @@ Global kod alanında oluşturulan "bileşik sabit" nesneleri, diğer isimlendiri
     *p = 2;   //tanımsız davranış
 }
 ```
-Yukarıda tanımlanan func işlevi içinde oluşturulan içsel blokta oluşturulan int türden otomatik ömürlü nesnemizin adresini p isimli bir gösterici değişkene atıyoruz. Otomatik ömürlü nesnenin hayatı oluşturulduğu kapsamı sonlandıran “}” atomunun bulunduğu yerde sona erecek. Bloğun dışındaki kodlar yürütüldüğünde artık nesnemiz hayatta olmadığı için p gösterici değişkeni bu durumda geçersiz (dangling) durumda. Şimdi de aşağıdaki koda bakalım:
+Yukarıda tanımlanan _func_ işlevi içinde oluşturulan içsel blokta oluşturulan int türden otomatik ömürlü nesnemizin adresini _p_ isimli bir gösterici değişkene atıyoruz. Otomatik ömürlü nesnenin hayatı oluşturulduğu kapsamı sonlandıran _“}”_ atomunun bulunduğu yerde sona erecek. Bloğun dışındaki kodlar yürütüldüğünde artık nesnemiz hayatta olmadığı için _p_ gösterici değişkeni bu durumda geçersiz _(dangling)_ durumda. Şimdi de aşağıdaki koda bakalım:
 
 ```typedef struct {
     int mx, my;
@@ -167,6 +170,7 @@ void drawline()
     for (int i = 0; i < 10; ++i)
 	drawpixel((Point) {i, i});
 }```
+
 Yukarıdaki kodda drawline işlevinin tanımında yer alan for döngüsünün her turunda yeni bir Point nesnesi oluşturuluyor. Böylece işlev (0,0) ve (9, 9) noktalarını birleştiren bir doğru çiziyor.
 
 Bileşik Sabit ifadeleri sabit ifadesi kategorisinde olmadıkları için normal olarak statik ömürlü bir nesneye bir bileşik sabit ifadesi ile ilk değer vermemiz geçerli değil:
@@ -181,7 +185,7 @@ void foo()
     static int z[] = (int[3]) { 1 };
     //...
 }
-Yukarıdaki kodda foo içinde yapılan tanımlamaların hiçbiri geçerli değil. Ancak bir GNU eklentisiyle GCC derleyicisinde bu mümkün kılınmış. Bu eklenti kullanıldığında yukarıdaki tanımlamalar aşağıdaki gibi bir kodla aynı anlama geliyor:
+Yukarıdaki kodda _foo_ işlevi içinde yapılan tanımlamaların hiçbiri geçerli değil. Ancak bir _GNU_ eklentisiyle _GCC_ derleyicisinde bu mümkün kılınmış. Bu eklenti kullanıldığında yukarıdaki tanımlamalar aşağıdaki gibi bir kodla aynı anlama geliyor:
 
 struct Point {
     int mx, my;
@@ -193,4 +197,4 @@ void foo()
     static int z[] = { 1, 0, 0 };
     //...
 }
-Bileşik sabit ifadeleri C++ dilinin sentaksında yer almıyor. Ancak başta GCC olmak üzere birçok C++ derleyicisi bu özelliği bir eklenti (extension) olarak kullanıma sunuyor.
+Bileşik sabit ifadeleri _C++_ dilinin sentaksında yer almıyor. Ancak başta _GCC_ olmak üzere birçok _C++_ derleyicisi bu özelliği bir eklenti _(extension)_ olarak kullanıma sunuyor.
