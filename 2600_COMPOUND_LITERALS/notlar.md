@@ -10,7 +10,7 @@ struct Rect{
 void draw_rect(struct Rect);
 int foo(const int *p);
  
-int main()
+int main(void)
 {
     struct Rect rec = { 1.2, 6.7 };
     int a[] = { 2, 6, 7, 1, 3 };
