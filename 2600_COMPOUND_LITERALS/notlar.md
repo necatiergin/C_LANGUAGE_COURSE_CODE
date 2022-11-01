@@ -48,7 +48,9 @@ ifadesi ile _20_ elemanlı bir dizi oluşturarak dizinin ilk I elemanının alac
 
 Yukarıdaki ifade ile _100_ elemanlı bir dizi oluşturduk. Dizinin sırasıyla _12_, _34_ ve _67_ indeksli elemanlarına ilk değerlerini verdik ve kalan elemanlarının hayata 0 değerleriyle gelmesini sağladık. _"designated initializer"_ kullanılması durumunda yine dizinin boyutunu belirtmek zorunda değiliz:
 
-```(int []){[12] = 2, [34] = 4, [67] = 6}```
+```
+(int []){[12] = 2, [34] = 4, [67] = 6}
+```
 Yukarıdaki ifade ile bu kez _68_ elemanlı bir dizi oluşturmuş olduk. Yapı ya da birlik nesnelerinin _"compound literal"_ biçiminde oluşturulması için kullanılması gereken sentaks da neredeyse aynı. _Employee_ isimli bir yapı türünün bildirildiğini düşünelim:
 
 ```typedef struct {
@@ -56,22 +58,29 @@ Yukarıdaki ifade ile bu kez _68_ elemanlı bir dizi oluşturmuş olduk. Yapı y
     int id;
     double wage;
 }Employee;```
+
 Şimdi bu türden nesnelerin oluşturulmasını sağlayacak bazı _"bileşik sabit"_ ifadeleri yazalım:
 
 ```(Employee){"Burhan Koc", 1345, 45.60)```
 Yukarıdaki ifade ile _Employee_ türünden bir nesneyi tüm elemanlarına ilk değer vererek oluşturduk.
 
+```
 (Employee){"Furkan Demirci")
-Yukarıdaki ifadede ise oluşturduğumuz _Employee_ nesnesinin yalnızca name isimli elemanına ilk değer verdik. Nesnemizin diğer elemanları 0 değerleri ile hayata başlamış oldu.
+```
+Yukarıdaki ifadede ise oluşturduğumuz _Employee_ nesnesinin yalnızca _name_ isimli elemanına ilk değer verdik. Nesnemizin diğer elemanları _0_ değerleri ile hayata başlamış oldu.
 
-```(Employee){.id = 7651, .name = "Can Demirci")```
+```
+(Employee){.id = 7651, .name = "Can Demirci")
+```
 Yukarıdaki ifade de ise oluşturduğumuz _Employee_ nesnesinin seçilmiş elemanlarına _"designated initializer"_ sentaksı ile ilk değer verdik. Şimdi de aşağıdaki kodu inceleyelim:
 
-```typedef struct
+```
+typedef struct
 {
     const char *pname;
     int no;
 } Student;
+
 int main()
 {
     Student a[] = { 
@@ -84,69 +93,84 @@ int main()
     a[1] = (Student) { "Seher", 45 };
     a[2] = (Student) { "Cihan", 98 };
     //...
-}```
+}
+```
+
 Yukarıdaki kodda main işlevi içinde elemanları Student türünden boyutu 10 olan bir dizi tanımlanıyor ve dizinin belirlenmiş elemanlarına ilk değer veriliyor. Daha sonra dizinin 1 ve 2 indisli elemanlarına Student türünden bileşik sabit ifadeleri ile atamalar yapılıyor. Aynı türden yapı nesnelerinin birbirlerine atanabildiğini hatırlayalım.
 
-Compound literal ifadeleri ile oluşturulan nesnelere sabit ifadeleri (constant expressions) ile ilk değer verme zorunluluğu yok:
+_Compound literal_ ifadeleri ile oluşturulan nesnelere sabit ifadeleri (constant expressions) ile ilk değer verme zorunluluğu yok:
 
-```void f(int x, int y, int z)
+```
+void f(int x, int y, int z)
 {
     int *p = (int[]) { x, y, z };
     //...
-}```
+}
+```
 Yukarıda tanımlanan func işlevi içinde oluşturulan 3 elemanlı int diziye isimlendirilmemiş nesneye işlevin parametre değişkenleri ile ilk değer veriliyor. Diziden adrese dönüşüm (array to pointer conversion) kuralı burada da geçerli.
 
 Bileşik sabit ifadeleri ile tekil (scalar) türlerden de nesneler oluşturmamız mümkün:
 
-```void f()
+```
+void f()
 {
     int *ip = &(int) { 10 };
     double *dp = &(double) { 12.3 };
     //...
-}```
+}
+```
 Yukarıdaki örneği yalnızca kodun geçerli olduğunu göstermek için verdim.
 
 "literal" sözcüğü "sabit" anlamında kullanılsa da "compound literals" biçiminde oluşturulan nesnelerin değerlerini değiştirmek tanımlı (defined) davranış niteliğinde:
 
-```#include <string.h>
+```
+#include <string.h>
 int main()
 {
     Employee *p = &(Employee) { .id = 7651 };
     strcpy(p->name, "Nurdan Temiz");
     p->wage = 45.80;
     //...
-}```
+}
+```
 Yukarıdaki örnekte oluşturulan Employee nesnesinin adresi ile _p_ isimli gösterici değişkene ilk değer veriliyor. Daha sonraki deyimlerle nesnemizin _name_ ve _wage_ isimli elemanlarının değerlerinin değiştirildiğini görüyorsunuz. Bileşik sabit ifadeleri ile oluşturduğumuz dizileri de değiştirebiliriz:
 
-```int main()
+```
+int main()
 {
     int *p = (int[5]) { 0 };
     //...
     for (int i = 0; i < 5; ++i)
  	p[i] = i;
     //...
-}```
+}
+```
 Bu şekilde oluşturulan char türden dizilerde tutulan yazıları da değiştirebiliriz:
 
-```int main()
+```
+int main()
 {
     char *p = (char[]) { "Beyhan" };
     //...
     *p = 'S';
-}```
+}
+```
 Ancak bir bileşik sabit ifadesi ile const bir nesne de oluşturmamız mümkün:
 
-```void display_employee(const Employee *p);
+```
+void display_employee(const Employee *p);
 int main()
 {
     const int *p = (const int[]) { 2, 3, 5, 7, 11, 13, 17, 19, 29 };
 	//
     display_employee(&(const Employee) { "Nihat Uslu", 7121, 20.20 });
-}```
+}
+```
 
 Global kod alanında oluşturulan "bileşik sabit" nesneleri, diğer isimlendirilmiş global nesneler gibi statik ömür _(static storage class)_ kategorisindeler. Blok içinde oluşturulan nesneler ise otomatik ömre _(automatic storage class)_ sahipler:
 
-```void f()
+```
+void f()
 {
     int *p;
     extern int func(void);
@@ -161,7 +185,8 @@ Global kod alanında oluşturulan "bileşik sabit" nesneleri, diğer isimlendiri
 ```
 Yukarıda tanımlanan _func_ işlevi içinde oluşturulan içsel blokta oluşturulan int türden otomatik ömürlü nesnemizin adresini _p_ isimli bir gösterici değişkene atıyoruz. Otomatik ömürlü nesnenin hayatı oluşturulduğu kapsamı sonlandıran _“}”_ atomunun bulunduğu yerde sona erecek. Bloğun dışındaki kodlar yürütüldüğünde artık nesnemiz hayatta olmadığı için _p_ gösterici değişkeni bu durumda geçersiz _(dangling)_ durumda. Şimdi de aşağıdaki koda bakalım:
 
-```typedef struct {
+```
+typedef struct {
     int mx, my;
 }Point;
 void drawpixel(Point);
@@ -169,12 +194,14 @@ void drawline()
 {
     for (int i = 0; i < 10; ++i)
 	drawpixel((Point) {i, i});
-}```
+}
+```
 
 Yukarıdaki kodda drawline işlevinin tanımında yer alan for döngüsünün her turunda yeni bir Point nesnesi oluşturuluyor. Böylece işlev (0,0) ve (9, 9) noktalarını birleştiren bir doğru çiziyor.
 
 Bileşik Sabit ifadeleri sabit ifadesi kategorisinde olmadıkları için normal olarak statik ömürlü bir nesneye bir bileşik sabit ifadesi ile ilk değer vermemiz geçerli değil:
 
+```
 struct Point {
 	int mx, my;
 };
@@ -185,8 +212,10 @@ void foo()
     static int z[] = (int[3]) { 1 };
     //...
 }
+```
 Yukarıdaki kodda _foo_ işlevi içinde yapılan tanımlamaların hiçbiri geçerli değil. Ancak bir _GNU_ eklentisiyle _GCC_ derleyicisinde bu mümkün kılınmış. Bu eklenti kullanıldığında yukarıdaki tanımlamalar aşağıdaki gibi bir kodla aynı anlama geliyor:
 
+```
 struct Point {
     int mx, my;
 };
@@ -197,4 +226,5 @@ void foo()
     static int z[] = { 1, 0, 0 };
     //...
 }
+```
 Bileşik sabit ifadeleri _C++_ dilinin sentaksında yer almıyor. Ancak başta _GCC_ olmak üzere birçok _C++_ derleyicisi bu özelliği bir eklenti _(extension)_ olarak kullanıma sunuyor.
