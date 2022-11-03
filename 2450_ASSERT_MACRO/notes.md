@@ -1,3 +1,5 @@
+[How to Define Your Own assert() Macro for Embedded Systems](https://barrgroup.com/embedded-systems/how-to/use-assert-macro)
+
 Solid code
 One of the most widely cited references on the topic of assertions is Writing Solid Code.2 
 I recommend it highly for its discussion of assertions as well as much of the other advice it offers.
