@@ -26,7 +26,7 @@ struct Student {
 	int no;
 };
 ```
-Peki yapının bu esnek dizi öğesini nasıl kullanacağız? Bir struct Student nesnesinin bellek alanını dinamik bellek işlevleriyle elde ederek flexible array öğemizin boyutunu programın çalışma zamanında belirleyebiliriz:
+Peki yapının bu esnek dizi öğesini nasıl kullanacağız? Bir _struct Student_ nesnesinin bellek alanını dinamik bellek işlevleriyle elde ederek _flexible array_ öğemizin boyutunu programın çalışma zamanında belirleyebiliriz:
 
 ```
 #include <stdio.h>
