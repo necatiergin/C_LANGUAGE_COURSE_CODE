@@ -6,7 +6,7 @@ int main(void)
 {
 	//...
 	size_t n = (rand() % 100 + 5) * 16;
-	int* p = (int*)malloc(sizeof(int)); // Let's call this memory block 1
+	int* p = (int*)malloc(sizeof(int)); 
 	//...
 	if (!p) {
 		printf("cannot allocate memory!");
