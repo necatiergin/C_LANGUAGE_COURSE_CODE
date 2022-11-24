@@ -10,7 +10,7 @@ int main(void)
 	printf("enter 2 words : ");
 	(void)scanf("%s%s", s1, s2);
 
-	if (s1 == s2) {  //always true
+	if (s1 == s2) {  //always false
 		printf("same words\n");
 	}
 	else {
