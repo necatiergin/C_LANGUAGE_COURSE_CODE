@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <limits.h>
 
-void Bit_print(int x)
+void bit_print(int x)
 {
 	unsigned int mask = ~(~0u >> 1);
 
@@ -17,7 +17,7 @@ int main(void)
 	unsigned int x = INT_MIN;
 
 	while (x) {
-		Bit_print(x);
+		bit_print(x);
 		x >>= 1;
 	}
 }
