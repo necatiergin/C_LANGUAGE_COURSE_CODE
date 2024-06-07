@@ -1,5 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 #include <stdio.h>
 #include <limits.h>
 
@@ -14,11 +12,11 @@ void bprint(int val)
 int main(void)
 {
 	int x;
-	printf("bir tamsayi girin: ");
+	printf("enter an integer: ");
 	(void)scanf("%d", &x);
 
 	bprint(x);
 	bprint(~x);
 	bprint(~~x);
-	printf("x = %d\n", x); //bitsel degil operatörünün yan etkisi yok
+	printf("x = %d\n", x); //bitwise not operator has no side effect
 }
