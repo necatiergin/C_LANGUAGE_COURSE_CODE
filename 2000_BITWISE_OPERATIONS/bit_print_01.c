@@ -1,6 +1,9 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+
 #include <stdio.h>
 
-void bit_print(int x)
+void bit_print(unsigned int x)
 {
 	unsigned int mask = ~(~0u >> 1);
 
@@ -15,7 +18,7 @@ void main(void)
 {
 	int ival;
 
-	printf("bir tam sayi giriniz: ");
+	printf("enter an integer: ");
 	(void)scanf("%d", &ival);
 	bit_print(ival);
 }
