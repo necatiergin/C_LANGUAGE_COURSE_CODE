@@ -1,3 +1,5 @@
+//to set a bit
+
 #include <stdio.h>
 
 void bit_print(unsigned int x)
