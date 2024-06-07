@@ -1,8 +1,6 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 #include <stdio.h>
 
-void bit_print(int x)
+void bit_print(unsigned int x)
 {
 	unsigned int mask = ~(~0u >> 1);
 
@@ -18,7 +16,7 @@ int main(void)
 {
 	unsigned int x = 0;
 
-	printf("kacinci biti set edelim: ");
+	printf("enter the index of the bit to set: ");
 	int n;
 	(void)scanf("%d", &n);
 
