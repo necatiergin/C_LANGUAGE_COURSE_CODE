@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <limits.h>
 
-void bprint(int val)
+void bprint(unsigned int val)
 {
 	for (int i = (int)(sizeof(int) * CHAR_BIT - 1); i >= 0; --i) {
 		putchar((val >> i) & 1 ? '1' : '0');
@@ -12,11 +12,13 @@ void bprint(int val)
 
 int main(void)
 {
-	int x = 1;
+	unsigned int x = 1;
+	
+	printf("x = %zu\n", x);  
 
 	bprint(x);
 	bprint(x << 1);
 	bprint(x << 2);
 
-	printf("x = %d\n", x);  //no side effect
+	printf("x = %zu\n", x);  //no side effect
 }
