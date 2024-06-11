@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 
-
 int set_bit_count(int x)
 {
 	int cnt = 0;
@@ -14,7 +13,6 @@ int set_bit_count(int x)
 
 	return cnt;
 }
-
 
 int main(void)
 {
