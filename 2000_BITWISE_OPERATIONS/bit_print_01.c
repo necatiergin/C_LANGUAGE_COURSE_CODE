@@ -1,6 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-
-
 #include <stdio.h>
 
 void bit_print(unsigned int x)
