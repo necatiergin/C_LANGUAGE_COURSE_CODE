@@ -20,7 +20,7 @@ int main(void)
 	int n;
 	(void)scanf("%d", &n);
 	bit_print(x);
-	x &= ~(1 << n);
+	x &= ~(1u << n);
 	bit_print(x);
 	printf("x = %u\n", x);
 };
