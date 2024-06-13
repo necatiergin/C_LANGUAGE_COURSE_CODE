@@ -22,7 +22,7 @@ int main(void)
 	int n;
 	(void)scanf("%d", &n);
 
-	x |= 1 << n;
+	x |= 1u << n;
 	printf("x = %u\n", x);
 	bit_print(x);
 };
