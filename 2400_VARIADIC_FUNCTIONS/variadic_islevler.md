@@ -1,7 +1,10 @@
 Bir işlevin istenilen sayıda değerle çağrılması programlamada genel bir ihtiyaç ve programlama dillerinin çoğunda bu ihtiyacı karşılamaya yönelik araç ya da araçlar var. Özellikle giriş çıkış işlemlerine _(input - output operations)_ yönelik hizmet veren kütüphanelerde böyle işlevler tercih ediliyor. Böyle işlevlere İngilizcede popüler olarak _"variadic function"_ deniyor. Ben bu terim yerine Türkçede _"istenilen sayıda argüman ile çağrılabilen işlev"_ terimini kullanacağım. Çağrıyı yapan kod böyle işlevlere, ne yaptırmak istediğine bağlı olarak, farklı sayıda veri gönderebiliyor.
 
 Örnekler verelim:
-_print_ isimli bir işlev kendisine gönderilen her bir ifadenin değerini ekrana yazdırıyor olabilir.get_mean isimli işlev kendisine gönderilen tam sayıların aritmetik ortalamasını hesaplıyor olabilir.concat isimli işlev kendisine gönderilen yazıları birleştirip tek bir yazı oluşturuyor olabilir. _push_back_vals_ isimli işlev kendisine gönderilen değerleri bir dinamik diziye ekliyor olabilir.
+_print_ isimli bir işlev kendisine gönderilen her bir ifadenin değerini ekrana yazdırıyor olabilir. <br>
+_get_mean_ isimli bir işlev kendisine gönderilen tam sayıların aritmetik ortalamasını hesaplıyor olabilir. <br>
+_concat_ isimli bir işlev kendisine gönderilen yazıları birleştirip tek bir yazı oluşturuyor olabilir. <br>
+ _push_back_vals_ isimli işlev kendisine gönderilen değerleri bir dinamik diziye ekliyor olabilir.
 
 Farklı programlama dillerinin böyle bir işlevin oluşturulmasını sağlayan farklı araçları var.Örneğin C++ dilinde bu yapı için ağırlıklı olarak türden bağımsız programlama _(generic programming)_ paradigmasına destek veren araçlardan faydalanılıyor.Bu yazının amacı C dilinde değişken sayıda argümanla çağrılabilen işlevleri ayrıntılı olarak incelemek.
 
