@@ -19,7 +19,7 @@ int main(void)
     foo(a); 
 }
 ```
-_main_ işlevi içinde tanımlanan _rec_ ve _a_ nesnelerinin yalnızca _draw_rect_ ve _foo_ işlevlerine yapılan çağrılarda kullanılmak için tanımlandığını düşünelim. Kod bu niyeti açıkça anlatmadığı için okuyucuyu da yanıltıyor. Ben böyle bir kodu okuduğumda bu nesnelerin kapsamları (scope) içinde tekrar kullanılacaklarını düşünüyorum. Bu tür kodlarda bir başka sorun da "kapsam sızıntısı" _(scope leakage)_ yani bu isimlerin kapsamlarının gereksiz yere geniş tutulması. Bu isimler bir daha kullanılmayacak olsalar da kapsamları içinde yanlışlıkla isimlerinin yazılması bir kodlama hatasına neden olabilir.
+_main_ işlevi içinde tanımlanan _rec_ ve _a_ nesnelerinin yalnızca _draw_rect_ ve _foo_ işlevlerine yapılan çağrılarda kullanılmak için tanımlandığını düşünelim. Kod bu niyeti açıkça anlatmadığı için okuyucuyu da yanıltıyor. Ben böyle bir kodu okuduğumda bu nesnelerin kapsamları _(scope)_ içinde tekrar kullanılacaklarını düşünüyorum. Bu tür kodlarda bir başka sorun da "kapsam sızıntısı" _(scope leakage)_ yani bu isimlerin kapsamlarının gereksiz yere geniş tutulması. Bu isimler bir daha kullanılmayacak olsalar da kapsamları içinde yanlışlıkla isimlerinin yazılması bir kodlama hatasına neden olabilir.
 
 Bir bileşik sabit kullanarak isimlendirilmemiş bir dizi, yapı ya da birlik nesnesi oluşturabiliriz:
 
