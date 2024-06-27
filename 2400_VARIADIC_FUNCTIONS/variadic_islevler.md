@@ -175,6 +175,7 @@ Aşağıda _printf_ işlevini sarmalayan basitleştirilmiş _print_ isimli bir i
 #include <stdio.h>
 #include <stdarg.h>
 #include <ctype.h>
+
 void print(const char* pfmt, ...)
 {
     va_list args;
@@ -209,7 +210,7 @@ int main(void)
 ```
 Çağrıyı yapan kod, işleve son argüman olarak başka bir argüman gönderilmeyeceğini belirten özel bir değer gönderebilir. Aşağıdaki kodu inceleyelim :
 
-```
+```C
 #include <stdarg.h>
 #include <string.h>
 #include <stdio.h>
@@ -246,4 +247,7 @@ int main(void)
 }
 ```
 
-Yukarıdaki kodda ismi _concat_ olan istenilen sayıda argümanla çağrılabilen bir işlev tanımlanıyor. _concat_ işlevi kendisine adresleri gönderilen yazıları elde ettiği dinamik bir bellek bloğunda birleştiriyor. İşlevi çağıran kod, birleştirilecek son yazının adresinden sonra işleve başka bir yazı gönderilmediğini bildirmek amacıyla işleve _NULL_ gösterici geçiyor.Yukarıdaki kodda _va_copy_ makrosunun kullanılması ile seçimlik argümanların iki kez dolaşıldığını görüyorsunuz.
+Yukarıdaki kodda ismi _concat_ olan istenilen sayıda argümanla çağrılabilen bir işlev tanımlanıyor. 
+_concat_ işlevi kendisine adresleri gönderilen yazıları elde ettiği dinamik bir bellek bloğunda birleştiriyor. 
+İşlevi çağıran kod, birleştirilecek son yazının adresinden sonra işleve başka bir yazı gönderilmediğini bildirmek amacıyla işleve _NULL_ gösterici geçiyor. 
+Yukarıdaki kodda _va_copy_ makrosunun kullanılması ile seçimlik argümanların iki kez dolaşıldığını görüyorsunuz.
