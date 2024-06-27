@@ -2,7 +2,7 @@
 
 void foo(int n)
 {
-	assert(n > 0 && n < 10);; //no problem
+	assert(n > 0 && n < 10); //no problem
 }
 
 void bar(const int* p, int size)
