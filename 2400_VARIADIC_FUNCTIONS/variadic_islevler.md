@@ -6,18 +6,24 @@ _get_mean_ isimli bir işlev kendisine gönderilen tam sayıların aritmetik ort
 _concat_ isimli bir işlev kendisine gönderilen yazıları birleştirip tek bir yazı oluşturuyor olabilir. <br>
  _push_back_vals_ isimli işlev kendisine gönderilen değerleri bir dinamik diziye ekliyor olabilir.
 
-Farklı programlama dillerinin böyle bir işlevin oluşturulmasını sağlayan farklı araçları var.Örneğin C++ dilinde bu yapı için ağırlıklı olarak türden bağımsız programlama _(generic programming)_ paradigmasına destek veren araçlardan faydalanılıyor.Bu yazının amacı C dilinde değişken sayıda argümanla çağrılabilen işlevleri ayrıntılı olarak incelemek.
+Farklı programlama dillerinin böyle bir işlevin oluşturulmasını sağlayan farklı araçları var. Örneğin C++ dilinde bu yapı için ağırlıklı olarak türden bağımsız programlama _(generic programming)_ paradigmasına destek veren araçlardan faydalanılıyor. Bu yazının amacı C dilinde değişken sayıda argümanla çağrılabilen işlevleri ayrıntılı olarak incelemek.
 
-C dilinde bir işlevin "variadic" olduğunu gösteren ... atomu. Yan yana yazılmış üç nokta karakterinin oluşturduğu atoma _(token)_ İngilizcede ellipsis deniyor.Bir işlevin _"variadic"_ olması için son parametre değişkeni olarak ... atomunun yazılması gerekiyor. Üç nokta atomu atomu ile gösterilen parametreye bundan sonra "variadic parametre" diyeceğim.
+C dilinde bir işlevin _"variadic"_ olduğunu gösteren ... atomu. Yan yana yazılmış üç nokta karakterinin oluşturduğu atoma _(token)_ İngilizcede _ellipsis_ deniyor. Bir işlevin _"variadic"_ olması için son parametre değişkeni olarak ... atomunun yazılması gerekiyor. Üç nokta atomu atomu ile gösterilen parametreye bundan sonra _"variadic parametre" _diyeceğim.
 
 ```
 void print(int n, ...);
 int sum(int n, ...);
 double ave(int, int, ...)
 ```
-Bu işlevlerin çağrılmasına ilişkin genel kural şu : Çağrıyı yapan taraf "variadic" parametreden önce yer alan türleri belirtilmiş tüm parametre değişkenlerine argüman göndermek zorunda.variadic parametre için kendi seçimine bağlı olarak _(opsiyonel olarak)_ dilediği sayıda argüman olarak gönderilebilir.Aşağıdaki kodu inceleyelim :
 
-```
+_variadic_ fonksiyon bildiriminin ya da tanımının geçerli olabilmesi için şu koşulların da sağlanması gerekiyor:
+- fonksiyonun birden fazla _variadic_ parametresi olamaz.
+- _variadic_ parametre son parametre olmalı.
+- _variadic_ parametreden önce en az bir parametre değişkeni daha olmalı.
+
+Bu işlevlerin çağrılmasına ilişkin genel kural şu : Çağrıyı yapan kod _"variadic"_ parametreden önce yer alan türleri belirtilmiş tüm parametre değişkenlerine argüman göndermek zorunda. _variadic_ parametre için kendi seçimine bağlı olarak _(opsiyonel olarak)_ dilediği sayıda argüman olarak gönderilebilir. Aşağıdaki kodu inceleyelim:
+
+```C
 void func(int, int, ...);
 int main(void)
 {
