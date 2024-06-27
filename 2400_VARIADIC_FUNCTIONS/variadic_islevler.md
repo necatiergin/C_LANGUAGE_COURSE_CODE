@@ -1,4 +1,4 @@
-Bir işlevin istenilen sayıda değerle çağrılması programlamada genel bir ihtiyaç ve programlama dillerinin çoğunda bu ihtiyacı karşılamaya yönelik araç ya da araçlar var. Özellikle giriş çıkış işlemlerine _(input - output operations)_ yönelik hizmet veren kütüphanelerde böyle işlevler tercih ediliyor. Böyle işlevlere İngilizcede popüler olarak _"variadic function"_ deniyor. Ben bu terim yerine Türkçede _"istenilen sayıda argüman ile çağrılabilen işlev"_ terimini kullanacağım. Çağrıyı yapan kod böyle işlevlere, ne yaptırmak istediğine bağlı olarak, farklı sayıda veri gönderebiliyor.
+Bir işlevin istenilen sayıda değerle çağrılması programlamada genel bir ihtiyaç ve programlama dillerinin çoğunda bu ihtiyacı karşılamaya yönelik araç ya da araçlar vardır. Özellikle giriş çıkış işlemlerine _(input - output operations)_ yönelik hizmet veren kütüphanelerde böyle işlevler tercih edilir. Böyle işlevlere İngilizcede popüler olarak _"variadic function"_ denmektedir. Bu terim yerine Türkçede _"istenilen sayıda argüman ile çağrılabilen işlev"_ terimini önerebilirim. Çağrıyı yapan kod böyle işlevlere, ne yaptırmak istediğine bağlı olarak, farklı sayıda veri gönderebilir.
 
 Örnekler verelim:
 _print_ isimli bir işlev kendisine gönderilen her bir ifadenin değerini ekrana yazdırıyor olabilir. <br>
@@ -6,20 +6,20 @@ _get_mean_ isimli bir işlev kendisine gönderilen tam sayıların aritmetik ort
 _concat_ isimli bir işlev kendisine gönderilen yazıları birleştirip tek bir yazı oluşturuyor olabilir. <br>
  _push_back_vals_ isimli işlev kendisine gönderilen değerleri bir dinamik diziye ekliyor olabilir.
 
-Farklı programlama dillerinin böyle bir işlevin oluşturulmasını sağlayan farklı araçları var. Örneğin C++ dilinde bu yapı için ağırlıklı olarak türden bağımsız programlama _(generic programming)_ paradigmasına destek veren araçlardan faydalanılıyor. Bu yazının amacı C dilinde değişken sayıda argümanla çağrılabilen işlevleri ayrıntılı olarak incelemek.
+Farklı programlama dillerinin böyle bir işlevin oluşturulmasını sağlayan farklı araçları vardır. Örneğin C++ dilinde bu yapı için ağırlıklı olarak türden bağımsız programlama _(generic programming)_ paradigmasına destek veren araçlardan faydalanılır. Bu yazıda C dilinde değişken sayıda argümanla çağrılabilen işlevleri ayrıntılı olarak inceleyeceğiz.
 
-C dilinde bir işlevin _"variadic"_ olduğunu gösteren ... atomu. Yan yana yazılmış üç nokta karakterinin oluşturduğu atoma _(token)_ İngilizcede _ellipsis_ deniyor. Bir işlevin _"variadic"_ olması için son parametre değişkeni olarak ... atomunun yazılması gerekiyor. Üç nokta atomu atomu ile gösterilen parametreye bundan sonra _"variadic parametre" _diyeceğim.
+C dilinde bir işlevin _"variadic"_ olduğunu gösteren ... atomudur. Yan yana yazılmış üç nokta karakterinin oluşturduğu atoma _(token)_ İngilizcede _ellipsis_ denir. Bir işlevin _"variadic"_ olması için son parametre değişkeni olarak ... atomunun yazılması gerekir. Üç nokta atomu atomu ile gösterilen parametreye bundan sonra _"variadic parametre"_ diyeceğiz
 
-```
+```C
 void print(int n, ...);
 int sum(int n, ...);
 double ave(int, int, ...)
 ```
 
-_variadic_ fonksiyon bildiriminin ya da tanımının geçerli olabilmesi için şu koşulların da sağlanması gerekiyor:
+_variadic_ fonksiyon bildiriminin ya da tanımının geçerli olabilmesi için şu koşulların da sağlanması gerekir:
 - fonksiyonun birden fazla _variadic_ parametresi olamaz.
-- _variadic_ parametre son parametre olmalı.
-- _variadic_ parametreden önce en az bir parametre değişkeni daha olmalı.
+- _variadic_ parametre son parametre olmalıdır.
+- _variadic_ parametreden önce en az bir parametre değişkeni daha olmalıdır.
 
 Bu işlevlerin çağrılmasına ilişkin genel kural şu : Çağrıyı yapan kod _"variadic"_ parametreden önce yer alan türleri belirtilmiş tüm parametre değişkenlerine argüman göndermek zorunda. _variadic_ parametre için kendi seçimine bağlı olarak _(opsiyonel olarak)_ dilediği sayıda argüman olarak gönderilebilir. Aşağıdaki kodu inceleyelim:
 
@@ -38,7 +38,7 @@ int main(void)
 _"variadic parametre"_ son parametre değişkeni olarak yazılmalı ve kendisinden önce türü belirtilmiş en az bir parametre değişkeni olmalı.
 
 #### tür kontrolü
-Seçime bağlı olarak gönderilecek argümanların türlerinin "variadic" işlev tarafından bilinmesi mümkün değil.Derleyici seçimlik(opsiyonel) argümanları işleve göndermeden "varsayılan argüman dönüşümü" _(default argument conversion)_ denilen dönüşümü gerçekleştirir. Yani _char_ ve _short_ türlerden olan argümanlar işaretli ya da işaretsiz _int_ türüne, _float_ türden olan argümanlar ise _double_ türüne dönüştürülürler. İstenilen sayıda argümanla çağrılan işlevlerin en zayıf tarafı da bu. Derleyicinin bir tür kontrolü yapma şansı yok.Bu yüzden variadic işlevler normal işlevlere göre daha yüksek kodlama hatası riski içeriyorlar.
+Seçime bağlı olarak gönderilecek argümanların türlerinin _"variadic"_ fonksiyon tarafından bilinmesi mümkün değil. Derleyici seçimlik _(opsiyonel)_ argümanları işleve göndermeden "varsayılan argüman dönüşümü" _(default argument conversion)_ denilen dönüşümü gerçekleştirir. Yani _char_ ve _short_ türlerden olan argümanlar işaretli ya da işaretsiz _int_ türüne, _float_ türden olan argümanlar ise _double_ türüne dönüştürülürler. İstenilen sayıda argümanla çağrılan işlevlerin en zayıf tarafı da budur: Derleyicinin bir tür kontrolü yapma şansı yoktur. Bu yüzden _variadic_ işlevler normal işlevlere göre daha yüksek kodlama hatası riski içerirler.
 
 #### stdarg.h başlık dosyası içinde tanımlanan makrolar
 _variadic_ bir işlev tanımlayabilmemiz için standart _<stdarg.h>_ başlık dosyasında bildirilen _va_list_ türünün ve yine aynı başlık dosyasında tanımlanan bazı standart makroların kullanılması gerekiyor:
