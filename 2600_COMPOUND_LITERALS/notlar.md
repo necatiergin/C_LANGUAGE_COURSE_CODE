@@ -2,7 +2,7 @@ _C99_ standartları ile _C_ diline eklenen en önemli araçlardan biri **compoun
 
 C’de yazdığımız kodlarda sıklıkla şöyle bir durumla karşılaşıyoruz: Bir diziye, bir yapı _(structure)_ ya da bir birlik _(union)_ nesnesine ihtiyacımız var. Ancak söz konusu nesneyi muhtemelen yalnızca tek bir yerde kullanacağız. Bu durumda isimlendirilmiş bir değişken tanımlamamız gerekiyor. Aşağıdaki koda bakalım:
 
-```
+```C
 struct Rect{
     double e1, e2;
 };
@@ -23,7 +23,7 @@ _main_ işlevi içinde tanımlanan _rec_ ve _a_ nesnelerinin yalnızca _draw_rec
 
 Bir bileşik sabit kullanarak isimlendirilmemiş bir dizi, yapı ya da birlik nesnesi oluşturabiliriz:
 
-```
+```C
 int main(void)
 {
     draw_rect((struct Rect){ 1.2, 6.7 });
@@ -32,34 +32,35 @@ int main(void)
 ```
 İşlevlere gönderdiğimiz argümanlar bileşik sabitler. Aslında _struct Rect_ türünden bir yapı nesnesini ve _5_ elemanlı bir _int_ diziyi isim vermeden oluşturmuş olduk. Şimdi _compound literal_ ifadelerine yönelik sentaksı ayrıntılarıyla ele almaya başlayabiliriz. Önce dizi oluşturan bileşik sabit ifadelerini inceleyelim: Sentaksta yer alması gereken parantez içine dönüşüm türünü _(cast type)_ yazıyoruz. Bu oluşturulacak dizinin türü. Daha sonra küme parantezi içinde oluşturacağımız dizinin elemanlarına verdiğimiz ilk değerleri listeliyoruz. Örneğin:
 
-```
+```C
 (int [3]){1, 2, 3}
 ```
 ifadesi ile _3_ elemanlı bir int dizi oluşturmuş oluyoruz. Parantez içinde dizinin türünü belirtirken dizinin boyutunu yazabileceğimiz gibi boyut değerinin çıkarımını derleyiciye de bırakabiliyoruz:
 
-```
+```C
 (int []){1, 2, 3, 4, 5, 6}
 ```
 Yukarıdaki ifade ile _6_ elemanlı _int_ bir dizi oluşturduk. Dizinin eleman sayısını belirtir ve eleman sayısından daha az sayıda ilk değer sağlarsak dizinin kalan elemanları varsayılan değerlerle (tam sayı ve gerçek sayı dizileri için _0_, gösterici dizileri için _NULL_ gösterici) hayata başlıyorlar:
 
-```
+```C
 (double a[20]) {1., 2., 3.}
 ```
 
 ifadesi ile _20_ elemanlı bir dizi oluşturarak dizinin ilk I elemanının alacağı değerleri belirtmiş olduk. Dizinin kalan _17_ elemanı 0. değerleriyle hayata başlayacak. Dizi elemanlarına ilk değer verirken yine _C99_ standartlarıyla dile eklenen _"designated initializer"_ denilen sentaks ile dizinin seçilmiş elemanlarına ilk değer verip diğer elemanlarını varsayılan değerlerle başlatabiliyoruz:
 
-```
+```C
 (int [100]){[12] = 2, [34] = 4, [67] = 6}
 ```
 
 Yukarıdaki ifade ile _100_ elemanlı bir dizi oluşturduk. Dizinin sırasıyla _12_, _34_ ve _67_ indeksli elemanlarına ilk değerlerini verdik ve kalan elemanlarının hayata 0 değerleriyle gelmesini sağladık. _"designated initializer"_ kullanılması durumunda yine dizinin boyutunu belirtmek zorunda değiliz:
 
-```
+```C
 (int []){[12] = 2, [34] = 4, [67] = 6}
 ```
+
 Yukarıdaki ifade ile bu kez _68_ elemanlı bir dizi oluşturmuş olduk. Yapı ya da birlik nesnelerinin _"compound literal"_ biçiminde oluşturulması için kullanılması gereken sentaks da neredeyse aynı. _Employee_ isimli bir yapı türünün bildirildiğini düşünelim:
 
-```
+```C
 typedef struct {
     char name[40];
     int id;
@@ -69,22 +70,23 @@ typedef struct {
 
 Şimdi bu türden nesnelerin oluşturulmasını sağlayacak bazı _"bileşik sabit"_ ifadeleri yazalım:
 
-```
+```C
 (Employee){"Burhan Koc", 1345, 45.60)
 ```
 Yukarıdaki ifade ile _Employee_ türünden bir nesneyi tüm elemanlarına ilk değer vererek oluşturduk.
 
-```
+```C
 (Employee){"Furkan Demirci")
 ```
 Yukarıdaki ifadede ise oluşturduğumuz _Employee_ nesnesinin yalnızca _name_ isimli elemanına ilk değer verdik. Nesnemizin diğer elemanları _0_ değerleri ile hayata başlamış oldu.
 
-```
+```C
 (Employee){.id = 7651, .name = "Can Demirci")
 ```
+
 Yukarıdaki ifade de ise oluşturduğumuz _Employee_ nesnesinin seçilmiş elemanlarına _"designated initializer"_ sentaksı ile ilk değer verdik. Şimdi de aşağıdaki kodu inceleyelim:
 
-```
+```C
 typedef struct
 {
     const char *pname;
@@ -133,7 +135,7 @@ Yukarıdaki örneği yalnızca kodun geçerli olduğunu göstermek için verdim.
 
 "literal" sözcüğü "sabit" anlamında kullanılsa da "compound literals" biçiminde oluşturulan nesnelerin değerlerini değiştirmek tanımlı _(defined)_ davranış niteliğinde:
 
-```
+```C
 #include <string.h>
 int main(void)
 {
@@ -145,7 +147,7 @@ int main(void)
 ```
 Yukarıdaki örnekte oluşturulan _Employee_ nesnesinin adresi ile _p_ isimli gösterici değişkene ilk değer veriliyor. Daha sonraki deyimlerle nesnemizin _name_ ve _wage_ isimli elemanlarının değerlerinin değiştirildiğini görüyorsunuz. Bileşik sabit ifadeleri ile oluşturduğumuz dizileri de değiştirebiliriz:
 
-```
+```C
 int main(void)
 {
     int *p = (int[5]) { 0 };
