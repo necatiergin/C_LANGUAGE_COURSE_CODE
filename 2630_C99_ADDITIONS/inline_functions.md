@@ -75,10 +75,10 @@ GNU derleyicisi C yerine C++'taki semantiği uyguluyor. (C++ açıklaması)
 Bir başka seçenek başlık dosyasında _static_ anahtar sözcüğü ile tanımlamak.
 Bu durumda inliene expansion olmaz ise her kod dosyası derlendiğinde iç bağlantıda ayrı bir kopya oluşacak<br>
 
-<br>The idea is that "inline" can be used in a header file, and then "extern inline" in a .c file. "extern inline" is just how you instruct the compiler which object file should contain the (externally visible) generated code.<br>
+
 
 <!---
-
+<br>The idea is that "inline" can be used in a header file, and then "extern inline" in a .c file. "extern inline" is just how you instruct the compiler which object file should contain the (externally visible) generated code.<br>
 inline: like GNU89 "extern inline"; no externally visible function is emitted, but one might be called and so must exist
 extern inline: like GNU89 "inline": externally visible code is emitted, so at most one translation unit can use this.
 static inline: like GNU89 "static inline". This is the only portable one between gnu89 and c99
