@@ -1,4 +1,4 @@
-- _inline_ anahtar sözcüğü C diline _C99_ Standardı ile eklendi. _C99_ ile eklenen diğer anahtar sözcüklerden farklı olarak __Inline_ yerine doğrudan _inline_ anahtar sözcüğü seçildi. (C99 standardı ile eklenen diğer anahtar sözcükler _ karakteri ve ondan sonra gelen büyük harf ile başlıyor: __Alignof, _Alignas_ gibi)
+- _inline_ anahtar sözcüğü C diline _C99_ Standardı ile eklendi. _C99_ ile eklenen diğer anahtar sözcüklerden farklı olarak __Inline_ yerine doğrudan _inline_ anahtar sözcüğü seçildi. (C99 standardı ile eklenen diğer anahtar sözcükler _ karakteri ve ondan sonra gelen büyük harf ile başlıyor: \_Alignof, \_Alignas_ gibi)
 - Daha önce _inline_ fonksiyonlar için derleyici eklentileri kullanılıyordu.
 - Bir fonksiyonun _inline_ anahtar sözcüğü ile tanımlanması derleyiciye bu fonksiyona yapılan çağrı için _"inline expansion"_ optimizasyonu ricası anlamında.
 
@@ -10,7 +10,7 @@ Derleyici _inline_ fonksiyonların tanımı ve çağrıları üstünde tüm kont
 Ancak bir _inline_ fonksiyon çağrıldığında derleyici onu bir fonksiyon gibi çağırmak yerine bizzat onun iç kodunu çağırma yerine enjekte edebilir. Böylece _C99_ ve sonrasında artık fonksiyon çağırma işlemini elimine etmek için küçük fonksiyonların makro yerine _inline_ fonksiyon biçiminde yazılması tavsiye edilmektedir. 
 Zaten _inline_ fonksiyonlar fonksiyonel makroların daha önce ele aldığımız dezavantajlarından kaçınmak amacıyla dile sokulmuştur. 
 
-<!---
+
 - _inline_ olmayan fonksiyonlar ile aynı semantik yapıya sahipler.
 - Makroların adresi alınamaz ancak _inline_ fonksiyonlar, fonksiyon olduklarından adresleri alınabilir.
 
@@ -19,12 +19,13 @@ _necati.h_ bir başlık dosyası olsun:
 
 ```C
 //necati.h
+
 inline int foo(int x, int y)
 {
   return x * x + y;
 } 
 ```
-
+<!---
 Bir başka modülden bu başlık dosyası _include_ edildiğinde derleyici bu fonksiyonun tanımını görecek ve _inline expansion_ optimizasyonu yapabilecek.
 Ancak derlyici sadece bunu gördüğünde object modüle bir _weak_ ya da _strong_ referans yazmayacak. 
 Derleyici bu fonksiyonun _external_ olduğunu varsayacak ve fonksiyon çağrısını buna göre oluşturacak. 
