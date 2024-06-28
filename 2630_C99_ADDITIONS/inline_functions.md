@@ -1,7 +1,7 @@
-- _inline_ anahtar sözcüğü C diline _C99_ Standardı ile eklendi. _C99_ ile eklenen diğer anahtar sözcüklerden farklı olarak
-__Inline_ yerine doğrudan _inline_ 
+- _inline_ anahtar sözcüğü C diline _C99_ Standardı ile eklendi. _C99_ ile eklenen diğer anahtar sözcüklerden farklı olarak __Inline_ yerine doğrudan _inline_ anahtar sözcüğü seçildi. (C99 ile eklenen diğer anahtar sözcükler _ karakteri ve obndan sonra gelen büyük harf ile başlıyor: _Alignof, _Alignas gibi)
 - Daha önce _inline_ fonksiyonlar için derleyici eklentileri kullanılıyordu.
-
+- Bir fonksiyonun _inline_ anahtar sözcüğü ile tanımlanması derleyiciye bu fonksiyona yapılan çağrı için _"inline expansion"_ optimizasyonu ricası anlamında.
+<!---
 C++ dilinde de _inline_ fonksiyonlar var. Ancak C ve C++ dilleri arasında _inline_ anahtar sözcüğünün kullanılmasında bazı farklılıklar var.
 
 C dilinde _inline_ fonksiyonlar, fonksiyonel makrolara (daha güvenli) bir seçenek oluşturabilir.
@@ -76,7 +76,7 @@ inline: like GNU89 "extern inline"; no externally visible function is emitted, b
 extern inline: like GNU89 "inline": externally visible code is emitted, so at most one translation unit can use this.
 static inline: like GNU89 "static inline". This is the only portable one between gnu89 and c99
 
-<!---
+
 kaan notlar
 ===========
 Daha önce küçük kod parçalarının "fonksion çağrılarını elimine etmek" için makro biçiminde yazılabileceğini söylemiştik. Örneğin bir tam sayının karesini hesaplayan bir fonksiyon söz konusu olsun:
