@@ -30,16 +30,19 @@ int main(void)
     foo((int []) { 2, 6, 7, 1, 3 }); 
 }
 ```
+
 İşlevlere gönderdiğimiz argümanlar bileşik sabitler. Aslında _struct Rect_ türünden bir yapı nesnesini ve _5_ elemanlı bir _int_ diziyi isim vermeden oluşturmuş olduk. Şimdi _compound literal_ ifadelerine yönelik sentaksı ayrıntılarıyla ele almaya başlayabiliriz. Önce dizi oluşturan bileşik sabit ifadelerini inceleyelim: Sentaksta yer alması gereken parantez içine dönüşüm türünü _(cast type)_ yazıyoruz. Bu oluşturulacak dizinin türü. Daha sonra küme parantezi içinde oluşturacağımız dizinin elemanlarına verdiğimiz ilk değerleri listeliyoruz. Örneğin:
 
 ```C
 (int [3]){1, 2, 3}
 ```
+
 ifadesi ile _3_ elemanlı bir int dizi oluşturmuş oluyoruz. Parantez içinde dizinin türünü belirtirken dizinin boyutunu yazabileceğimiz gibi boyut değerinin çıkarımını derleyiciye de bırakabiliyoruz:
 
 ```C
 (int []){1, 2, 3, 4, 5, 6}
 ```
+
 Yukarıdaki ifade ile _6_ elemanlı _int_ bir dizi oluşturduk. Dizinin eleman sayısını belirtir ve eleman sayısından daha az sayıda ilk değer sağlarsak dizinin kalan elemanları varsayılan değerlerle (tam sayı ve gerçek sayı dizileri için _0_, gösterici dizileri için _NULL_ gösterici) hayata başlıyorlar:
 
 ```C
@@ -112,7 +115,7 @@ Yukarıdaki kodda _main_ işlevi içinde elemanları _Student_ türünden boyutu
 
 _Compound literal_ ifadeleri ile oluşturulan nesnelere sabit ifadeleri _(constant expressions)_ ile ilk değer verme zorunluluğu yok:
 
-```
+```C
 void f(int x, int y, int z)
 {
     int *p = (int[]) { x, y, z };
@@ -123,7 +126,7 @@ Yukarıda tanımlanan _func_ işlevi içinde oluşturulan _3_ elemanlı _int_ di
 
 Bileşik sabit ifadeleri ile tekil _(scalar)_ türlerden de nesneler oluşturmamız mümkün:
 
-```
+```C
 void f(void)
 {
     int *ip = &(int) { 10 };
@@ -159,7 +162,7 @@ int main(void)
 ```
 Bu şekilde oluşturulan char türden dizilerde tutulan yazıları da değiştirebiliriz:
 
-```
+```C
 int main(void)
 {
     char *p = (char[]) { "Beyhan" };
@@ -169,8 +172,9 @@ int main(void)
 ```
 Ancak bir bileşik sabit ifadesi ile const bir nesne de oluşturmamız mümkün:
 
-```
+```C
 void display_employee(const Employee *p);
+
 int main(void)
 {
     const int *p = (const int[]) { 2, 3, 5, 7, 11, 13, 17, 19, 29 };
@@ -181,7 +185,7 @@ int main(void)
 
 Global kod alanında oluşturulan _"bileşik sabit"_ nesneleri, diğer isimlendirilmiş global nesneler gibi statik ömür _(static storage class)_ kategorisindeler. Blok içinde oluşturulan nesneler ise otomatik ömre _(automatic storage class)_ sahipler:
 
-```
+```C
 void f(void)
 {
     int *p;
@@ -213,10 +217,11 @@ Yukarıdaki kodda drawline işlevinin tanımında yer alan for döngüsünün he
 
 Bileşik Sabit ifadeleri sabit ifadesi kategorisinde olmadıkları için normal olarak statik ömürlü bir nesneye bir bileşik sabit ifadesi ile ilk değer vermemiz geçerli değil:
 
-```
+```C
 struct Point {
 	int mx, my;
 };
+
 void foo()
 {
     static struct Point p = (struct Point) { 1, 3 };
@@ -225,9 +230,10 @@ void foo()
     //...
 }
 ```
+
 Yukarıdaki kodda _foo_ işlevi içinde yapılan tanımlamaların hiçbiri geçerli değil. Ancak bir _GNU_ eklentisiyle _GCC_ derleyicisinde bu mümkün kılınmış. Bu eklenti kullanıldığında yukarıdaki tanımlamalar aşağıdaki gibi bir kodla aynı anlama geliyor:
 
-```
+```C
 struct Point {
     int mx, my;
 };
@@ -239,4 +245,5 @@ void foo()
     //...
 }
 ```
+
 Bileşik sabit ifadeleri _C++_ dilinin sentaksında yer almıyor. Ancak başta _GCC_ olmak üzere birçok _C++_ derleyicisi bu özelliği bir eklenti _(extension)_ olarak kullanıma sunuyor.
