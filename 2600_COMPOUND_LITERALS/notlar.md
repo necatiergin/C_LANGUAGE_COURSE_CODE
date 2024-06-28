@@ -136,10 +136,11 @@ void f(void)
 ```
 Yukarıdaki örneği yalnızca kodun geçerli olduğunu göstermek için verdim.
 
-"literal" sözcüğü "sabit" anlamında kullanılsa da "compound literals" biçiminde oluşturulan nesnelerin değerlerini değiştirmek tanımlı _(defined)_ davranış niteliğinde:
+_"literal"_ sözcüğü "sabit" anlamında kullanılsa da _"compound literals"_ biçiminde oluşturulan nesnelerin değerlerini değiştirmek tanımlı _(defined)_ davranış niteliğinde:
 
 ```C
 #include <string.h>
+
 int main(void)
 {
     Employee *p = &(Employee) { .id = 7651 };
@@ -148,6 +149,7 @@ int main(void)
     //...
 }
 ```
+
 Yukarıdaki örnekte oluşturulan _Employee_ nesnesinin adresi ile _p_ isimli gösterici değişkene ilk değer veriliyor. Daha sonraki deyimlerle nesnemizin _name_ ve _wage_ isimli elemanlarının değerlerinin değiştirildiğini görüyorsunuz. Bileşik sabit ifadeleri ile oluşturduğumuz dizileri de değiştirebiliriz:
 
 ```C
@@ -170,7 +172,7 @@ int main(void)
     *p = 'S';
 }
 ```
-Ancak bir bileşik sabit ifadesi ile const bir nesne de oluşturmamız mümkün:
+Ancak bir bileşik sabit ifadesi ile _const_ bir nesne de oluşturmamız mümkün:
 
 ```C
 void display_employee(const Employee *p);
@@ -201,11 +203,13 @@ void f(void)
 ```
 Yukarıda tanımlanan _func_ işlevi içinde oluşturulan içsel blokta oluşturulan int türden otomatik ömürlü nesnemizin adresini _p_ isimli bir gösterici değişkene atıyoruz. Otomatik ömürlü nesnenin hayatı oluşturulduğu kapsamı sonlandıran _“}”_ atomunun bulunduğu yerde sona erecek. Bloğun dışındaki kodlar yürütüldüğünde artık nesnemiz hayatta olmadığı için _p_ gösterici değişkeni bu durumda geçersiz _(dangling)_ durumda. Şimdi de aşağıdaki koda bakalım:
 
-```
+```C
 typedef struct {
     int mx, my;
 }Point;
+
 void drawpixel(Point);
+
 void drawline(void)
 {
     for (int i = 0; i < 10; ++i)
@@ -213,7 +217,7 @@ void drawline(void)
 }
 ```
 
-Yukarıdaki kodda drawline işlevinin tanımında yer alan for döngüsünün her turunda yeni bir Point nesnesi oluşturuluyor. Böylece işlev (0,0) ve (9, 9) noktalarını birleştiren bir doğru çiziyor.
+Yukarıdaki kodda _drawline_ işlevinin tanımında yer alan for döngüsünün her turunda yeni bir _Point_ nesnesi oluşturuluyor. Böylece işlev _(0,0)_ ve _(9, 9)_ noktalarını birleştiren bir doğru çiziyor.
 
 Bileşik Sabit ifadeleri sabit ifadesi kategorisinde olmadıkları için normal olarak statik ömürlü bir nesneye bir bileşik sabit ifadesi ile ilk değer vermemiz geçerli değil:
 
@@ -237,6 +241,7 @@ Yukarıdaki kodda _foo_ işlevi içinde yapılan tanımlamaların hiçbiri geçe
 struct Point {
     int mx, my;
 };
+
 void foo()
 {
     static struct Point p = { 1, 3 };
