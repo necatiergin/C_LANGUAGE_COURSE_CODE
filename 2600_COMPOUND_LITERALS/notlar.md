@@ -74,17 +74,17 @@ typedef struct {
 Şimdi bu türden nesnelerin oluşturulmasını sağlayacak bazı _"bileşik sabit"_ ifadeleri yazalım:
 
 ```C
-(Employee){"Burhan Koc", 1345, 45.60)
+(Employee){"Burhan Koc", 1345, 45.60}
 ```
 Yukarıdaki ifade ile _Employee_ türünden bir nesneyi tüm elemanlarına ilk değer vererek oluşturduk.
 
 ```C
-(Employee){"Furkan Demirci")
+(Employee){"Furkan Demirci"}
 ```
 Yukarıdaki ifadede ise oluşturduğumuz _Employee_ nesnesinin yalnızca _name_ isimli elemanına ilk değer verdik. Nesnemizin diğer elemanları _0_ değerleri ile hayata başlamış oldu.
 
 ```C
-(Employee){.id = 7651, .name = "Can Demirci")
+(Employee){.id = 7651, .name = "Can Demirci"}
 ```
 
 Yukarıdaki ifade de ise oluşturduğumuz _Employee_ nesnesinin seçilmiş elemanlarına _"designated initializer"_ sentaksı ile ilk değer verdik. Şimdi de aşağıdaki kodu inceleyelim:
