@@ -25,18 +25,18 @@ inline int foo(int x, int y)
   return x * x + y;
 } 
 ```
-<!---
+
 Bir başka modülden bu başlık dosyası _include_ edildiğinde derleyici bu fonksiyonun tanımını görecek ve _inline expansion_ optimizasyonu yapabilecek.
-Ancak derlyici sadece bunu gördüğünde object modüle bir _weak_ ya da _strong_ referans yazmayacak. 
+Ancak derleyici sadece bunu gördüğünde object modüle bir _weak_ ya da _strong_ referans yazmayacak. 
 Derleyici bu fonksiyonun _external_ olduğunu varsayacak ve fonksiyon çağrısını buna göre oluşturacak. 
 Yani bu fonksiyonun tanımı bir başka dosyada yok ise _link_ zamanında çağrılan fonksiyon referansı linker tarafından bulunamadığı için hata oluşacak.
 Bu durumda bu fonksiyonun bir modülde tanımlanması gerekiyor.
 
 eğer _non-inline copy_ oluşturulması için bir neden yoksa bir sorun oluşmaz
 - Derleyici _inline_ anahtar sözcüğü ile yapılan tanımdan _inline expansion_ optimizasyonu yapabilir.
-- Ancak fonksiyonun fonksiyonun adresi alındığında derleyici fonksiyonun non-inline bir kopyasını oluşturmak zorunda.
+- Ancak fonksiyonun fonksiyonun adresi alındığında derleyici fonksiyonun _non-inline_ bir kopyasını oluşturmak zorunda.
+- _non-inline_ kopya dış bağlantıdaır.
 
-non-inline copy has external linkage!<br>
 Bunun için kod dosyalarından birinde şunu yapmamız gerekiyor:
 
 ```C
@@ -81,7 +81,7 @@ inline: like GNU89 "extern inline"; no externally visible function is emitted, b
 extern inline: like GNU89 "inline": externally visible code is emitted, so at most one translation unit can use this.
 static inline: like GNU89 "static inline". This is the only portable one between gnu89 and c99
 
-
+<!---
 kaan notlar
 ===========
 Daha önce küçük kod parçalarının "fonksion çağrılarını elimine etmek" için makro biçiminde yazılabileceğini söylemiştik. Örneğin bir tam sayının karesini hesaplayan bir fonksiyon söz konusu olsun:
