@@ -3,7 +3,7 @@ int main(void)
 	int x = 99;
 	int* ptr = &x;
 
-	*ptr++;
-	*ptr++;  //ub
+	int a = *ptr++;
+	int b = *ptr++;  //ub
 	//...
 }
