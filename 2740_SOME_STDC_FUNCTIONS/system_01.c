@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define  MAX_COMMAND_LENGTH		80
 
@@ -20,7 +21,7 @@ int main(void)
 		(void)scanf("%[^\n]s", command_entry);
 		if (!strcmp(command_entry, "terminate"))
 			break;
-		
+
 		system(command_entry);
 		clear_input_buffer();
 	}
