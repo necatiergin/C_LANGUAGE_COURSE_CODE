@@ -6,7 +6,7 @@ void f(void)
  	p = &(int) { func() };
 	*p = 1;   //sorun yok
     }
-    // p pointer değişkeni dangling durumda.
+    // p is dangling
 	
-    *p = 2;   //tanımsız davranış
+    *p = 2;   //u.b.
 }
