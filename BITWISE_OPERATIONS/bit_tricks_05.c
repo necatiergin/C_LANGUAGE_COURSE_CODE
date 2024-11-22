@@ -1,3 +1,5 @@
+// to test if a number is power of two
+
 #define power_of_two(a)      ((a) && !((a) & ((a) - 1)))
 
 /*
