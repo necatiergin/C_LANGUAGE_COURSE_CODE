@@ -1,5 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 #include <stdarg.h>
 #include <string.h>
 #include <stdio.h>
