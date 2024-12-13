@@ -1,3 +1,5 @@
+// directon of standart input to a file
+
 #include <stdio.h>
 #include <time.h>
 
