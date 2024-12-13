@@ -6,9 +6,14 @@
 // not NULL expected
 // compiler may issue diagnostic (warning)
 
-void func(int p[static 10])
+#include <stdio.h>
+
+void func(const int p[static 10])
 {
-	//...
+	for (int i = 0; i < 10; ++i) {
+		printf("%d ", p[i]);
+	}
+	printf("\n");
 }
 
 int main()
