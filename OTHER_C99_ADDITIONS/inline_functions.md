@@ -78,7 +78,7 @@ Bu durumda _inline expansion_ olmaz ise her kod dosyası derlendiğinde iç bağ
 _inline_ fonksiyonlar üç ayrı şekilde tanımlanabilirler. 
 Bu tanımlanma biçimleri inline fonksiyonların ele alınma biçimleri üzerinde farklılık oluşturur:
 
-**- inline<br>**
+-inline
 Derleyici _inline_ yerleştirme _(inline expansion)_ yaparsa bir sorun olmaz. Ancak yapamaz ise derleyici _CALL_ makine komutunu yerleştirir. 
 Başka modülde bu fonksiyon yoksa bağlama _(link)_ aşamasında hata oluşur.
 **- static inline**<br>
