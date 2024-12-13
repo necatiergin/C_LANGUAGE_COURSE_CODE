@@ -15,8 +15,9 @@ int main(void)
 
 	time_t now = time(NULL);
 	time_t earthquake = mktime(&tm);
-	time_t result = now - earthquake;
-
+	//time_t result = now - earthquake;
+	time_t result = (time_t)difftime(now, earthquake);
+	
 	struct tm* ptm = localtime(&result);
 
 	printf("duration since the earthquake : "
