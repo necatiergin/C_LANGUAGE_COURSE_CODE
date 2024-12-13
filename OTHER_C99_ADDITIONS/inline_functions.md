@@ -78,19 +78,25 @@ Bu durumda _inline expansion_ olmaz ise her kod dosyası derlendiğinde iç bağ
 _inline_ fonksiyonlar üç ayrı şekilde tanımlanabilirler. 
 Bu tanımlanma biçimleri inline fonksiyonların ele alınma biçimleri üzerinde farklılık oluşturur:
 
-- inline<br>
+**- inline<br>**
 Derleyici _inline_ yerleştirme _(inline expansion)_ yaparsa bir sorun olmaz. Ancak yapamaz ise derleyici _CALL_ makine komutunu yerleştirir. 
 Başka modülde bu fonksiyon yoksa bağlama _(link)_ aşamasında hata oluşur.
-- static inline: Derleyici _inline_ yerleştirme yapsa da yapmasa da bir sorun oluşmaz. 
+**- static inline**<br>
+ Derleyici _inline_ yerleştirme yapsa da yapmasa da bir sorun oluşmaz. 
 Ancak fonksiyonu inline yerleştiremez ise iç bağlantıya _(internal linkage)_ sahip biçimde amaç dosyaya yazar ve fonksiyonu _CALL_ makine komutuyla çağırır.
+**- extern inline<br>**
+Derleyici _inline_ yerleştirme yaparsa sorun olmaz. Yapamaz ise _CALL_ makine komutunu kullanır. 
+Ancak her zaman derleyici fonksiyonu amaç dosyaya _extern linkage_'a sahip olacak biçimde yazar. 
+Dolayısıyla birden fazla modülde bu fonksiyonun tanımı olduğunda bağlantı aşamasında hata oluşur. 
 
-3) extern inline: Derleyici inline açım yaparsa sorun olmaz. Açamazsa CALL makine komutunu kullanır. Ancak her zaman derleyici fonksiyonu amaç dosyaya _extern linkage_'a sahip olacak biçimde yazar. Dolayısıyla birden fazla modülde bu fonksiyon kullanılırsa error oluşur. 
+Eğer _inline fonksiyon_ derleyici tarafından inline yerleştirme yapamıyor ise bir sorun oluşmasın istiyorsak _static inline_ tanımlamasını tercih edebiliriz.
+Ya da _inline_ tanımlamasını tercih edip ayrıca fonksiyonun _static_ olmayan bir tanımlamasını başka bir modülde bulundurmalıyız. 
+Programcılar tarafından en çok tercih edilen biçim _"static inline"_ biçimidir. 
+_inline_ fonksiyonlar her derleme işleminde derleyici tarafından görülmek zorundadır. 
+Dolayısıyla bu fonksiyonlar başlık dosyalarında bulunurlar. Birden fazla modülle çalıştığımızda _inline_ fonksiyonları ortak bir başlık dosyasına yerleştirebiliriz. 
 
-Burada programcı nasıl bir yol izlemeidir? Eğer programcı inline fonksiyon derleyici tarafından inline açılamıyorsa bir sorun oluşmasın istiyorsa ya static inline tanımlamasını tercih etmelidir ya da inline tanımlamasını tercih edip ayrıca fonksiyonun static olmayan bir tanımlamasını başka bir modülde bulundurmalıdır. C'de inline fonksiyonlar için en çok tercih edilen biçim "static inline" biçimidir. 
-
-inline fonksiyonlar her derleme işleminde derleyici tarafından görülmek zorundadır. 
-Dolayısıyla bu fonksiyonlar kütüphanelere yerleştirilemezler. 
-Birden fazla modülle çalışırken biz inline fonksiyonları ortak bir başlık dosyasına yerleştirebiliriz. Örneğin:
+<!---
+Örneğin:
 
 ```C
 /* project.h */
