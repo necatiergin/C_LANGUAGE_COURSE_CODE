@@ -1,3 +1,5 @@
+//dynamic memory mistakes
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -7,5 +9,5 @@ int main(void)
 	char* p = str;
 	//...
 	puts(p);
-	free(p);
+	free(p); //ub.
 }
