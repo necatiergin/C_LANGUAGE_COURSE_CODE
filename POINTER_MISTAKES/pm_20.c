@@ -4,7 +4,7 @@ int main(void)
 {
 	int x;
 	int* p = &x;
-	printf("bir tam sayi girin: ");
-	scanf("%d", *p); //ub
+	printf("enter an integer : ");
+	scanf("%d", *p); //ub  (p not *p)
 	//...
 }
