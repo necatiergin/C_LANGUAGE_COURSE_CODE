@@ -10,13 +10,13 @@ int icmp(const void* vp1, const void* vp2)
 		i1 < i2 ? -1 : 0;
 }
 
-//memory leak
+
 int get_median(const int* p, size_t size)
 {
 	int* pd = (int*) malloc(size * sizeof(int));
 	//...
 	memcpy(pd, p, size * sizeof(int));
-	qsort(pd, size, *pd, &icmp);
+	qsort(pd, size, sizdeof(int), &icmp);
 
 	return pd[size / 2];
 }
