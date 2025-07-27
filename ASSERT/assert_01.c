@@ -11,5 +11,5 @@
     abort()                                   \
   ))
 #else
-#define assert(EXPR)  ((void)0)
+#define ASSERT(EXPR)  ((void)0)
 #endif /* NDEBUG */
