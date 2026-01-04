@@ -18,6 +18,4 @@ int main(void)
     double seconds = difftime(now, mktime(&beg));
 
     printf("%.f seconds have passed since the beginning of the month.\n", seconds);
-
-    return 0;
 }
