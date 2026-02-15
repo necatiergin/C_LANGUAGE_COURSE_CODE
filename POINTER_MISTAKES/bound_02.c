@@ -1,9 +1,9 @@
 int main(void)
 {
-	int x = 99;
-	int* ptr = &x;
+	int ar[5] = { 0 };
+	int* ptr = ar + 4;
 
-	int a = *ptr++;
-	int b = *ptr++;  //ub
+	int x = *ptr++;
+	int y = *ptr++;  //ub
 	//...
 }
