@@ -1,5 +1,11 @@
 #include <limits.h>
 #include <string.h>
+/*
+    struct String {
+        size_t len;
+        char* data;
+    };
+*/
 
 struct String {
     size_t len;
