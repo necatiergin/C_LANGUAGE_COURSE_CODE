@@ -2,6 +2,6 @@
 
 #ifndef __STDC_NO_VLA__ 
 
-void func(int x, ...);
+void func(int x, int y);
 
 #endif
